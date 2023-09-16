@@ -3,12 +3,9 @@ import { useState, useEffect, useRef } from 'react';
 import * as tf from "@tensorflow/tfjs";
 import { DropzoneArea } from "material-ui-dropzone";
 import { Backdrop, Chip, CircularProgress, Grid, Stack } from "@mui/material";
-import Webcam from "react-webcam";
+import Camera from './Camera';
 
-const videoConstraints = {
-    width: 540,
-    facingMode: "environment",
-  };
+
 
 const Breed = () => {
     const [model, setModel] = useState(null);
@@ -17,51 +14,46 @@ const Breed = () => {
     const [confidence, setConfidence] = useState(null);
     const [predictedClass, setPredictedClass] = useState(null);
   
-    const webcamRef = useRef(null);
-    const [url, setUrl] = React.useState(null);
-  
-  
-    const imagePredictFromClick = async (myurl) =>{
-      setUrl(myurl)
-      console.log("object...",myurl);
-      const image = await createHTMLImageElement(myurl);
-  
-      // tf.tidy for automatic memory cleanup
-      const [predictedClass, confidence] = tf.tidy(() => {
-       const tensorImg = tf.browser.fromPixels(image).resizeNearestNeighbor([224, 224]).toFloat().expandDims();
-       const result = model.predict(tensorImg);
-  
-       const predictions = result.dataSync();
-       const predicted_index = result.as1D().argMax().dataSync()[0];
-  
-       const predictedClass = classLabels[predicted_index];
-       const confidence = Math.round(predictions[predicted_index] * 100);
-  
-       return [predictedClass, confidence];
-     });
-     console.log(predictedClass);
-  
-     setPredictedClass(predictedClass);
-     setConfidence(confidence);
-     setLoading(false);
-    }
-  
-    const capturePhoto = React.useCallback(async () => {
-      setLoading(true)
-      const imageSrc = webcamRef.current.getScreenshot();
-      setUrl(imageSrc);
-       // Stop capturing by disabling camera
-    const tracks = webcamRef.current.stream.getTracks();
-    tracks.forEach((track) => {
-      track.stop();
+    const [data, setData] = useState("");
+
+
+    const imagePredictFromClick = async (data) =>{
+      
+      console.log("object...",data);
+     const image = await createHTMLImageElement(data);
+ 
+     // tf.tidy for automatic memory cleanup
+     const [predictedClass, confidence] = tf.tidy(() => {
+      const tensorImg = tf.browser.fromPixels(image).resizeNearestNeighbor([224, 224]).toFloat().expandDims();
+      const result = model.predict(tensorImg);
+ 
+      const predictions = result.dataSync();
+      const predicted_index = result.as1D().argMax().dataSync()[0];
+ 
+      const predictedClass = classLabels[predicted_index];
+      const confidence = Math.round(predictions[predicted_index] * 100);
+ 
+      return [predictedClass, confidence];
     });
-  
-      imagePredictFromClick(imageSrc);
-    }, [webcamRef]);
-  
-    const onUserMedia = (e) => {
-      console.log(e);
+    console.log(predictedClass);
+ 
+    setPredictedClass(predictedClass);
+    setConfidence(confidence);
+    setLoading(false);
+   }
+
+    const addimage = (url) => {
+      console.log(url);
+      setData(url)
+     
+      imagePredictFromClick(url);
+
     };
+  
+  
+   
+  
+   
   
     useEffect(() => {
       const loadModel = async () => {
@@ -84,7 +76,7 @@ const Breed = () => {
   
       loadModel();
       getClassLabels();
-    }, [url]);
+    }, []);
   
     const readImageFile = (file) => {
       return new Promise((resolve) => {
@@ -138,7 +130,6 @@ const Breed = () => {
         setLoading(false);
       }
     };
-  
 
   return (
     <div>
@@ -166,20 +157,7 @@ const Breed = () => {
           />
         </Stack>
 
-        <Webcam
-      ref={webcamRef}
-      audio={true}
-      screenshotFormat="image/jpeg"
-      videoConstraints={videoConstraints}
-      onUserMedia={onUserMedia}
-    />
-    <button onClick={capturePhoto}>Capture</button>
-    <button onClick={() => setUrl(null)}>Refresh</button>
-    {url && (
-      <div>
-        <img src={url} alt="Screenshot" />
-      </div>
-    )}
+        <Camera onAdd={addimage}/>
 
       </Grid>
     </Grid>
