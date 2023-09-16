@@ -135,7 +135,7 @@ const Breed = () => {
     <div>
     <Grid container className="App" direction="column" alignItems="center" justifyContent="center" marginTop="12%">
       <Grid item>
-        <h1 style={{ textAlign: "center", marginBottom: "1.5em" }}>MobileNetV3 Image Classifier</h1>
+        <h1 style={{ textAlign: "center", marginBottom: "1.5em" }}>Get Your Animal Breed</h1>
         <DropzoneArea
           acceptedFiles={["image/*"]}
           dropzoneText={"Add an image"}
