@@ -27,6 +27,9 @@ html{
   background-position:center; 
   background-repeat: no-repeat;
 }
+.blacktext{
+  color: black !important;
+}
 
 @media (max-width: 767px) {
   .desktop {
