@@ -11,7 +11,6 @@ function App() {
     <div className="pages">
       <Routes>
         <Route path='/' element={<LandingPage />} />
-
         <Route path='/home' element={<Home />} />
         <Route path='/report' element={<AnimalReport/>}/>
       </Routes>

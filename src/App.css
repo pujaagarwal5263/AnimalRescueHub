@@ -27,9 +27,13 @@ html{
   background-position:center; 
   background-repeat: no-repeat;
 }
+
+
 .blacktext{
-  color: black !important;
+  background-color: green;
+  color: black;
 }
+
 
 @media (max-width: 767px) {
   .desktop {

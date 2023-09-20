@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-//import cloudinary from 'cloudinary';
+import cloudinary from 'cloudinary';
 
 function Main() {
   const [formData, setFormData] = useState({
@@ -13,13 +13,13 @@ function Main() {
   const [imageUrls, setImageUrls] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]);
 
-  const cloudinaryConfig = {
-    cloud_name: process.env.REACT_APP_CLOUDNAME,
-    api_key: process.env.REACT_APP_CLOUDINARY_API_KEY,
-    api_secret: process.env.REACT_APP_CLOUDINARY_API_SECRET,
-  };
+//   const cloudinaryConfig = { 
+//     cloud_name: "dndorgct9",
+//     api_key: "967523612336929",
+//     api_secret: "UFUbj4CcHCbBniV8VrDYv6-Q1sI",
+//   };
   
-  cloudinary.config(cloudinaryConfig);
+//   cloudinary.config(cloudinaryConfig);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -44,7 +44,7 @@ function Main() {
         files.map(async (file) => {
           // Upload the image to Cloudinary
           const result = await cloudinary.uploader.upload(file, {
-            upload_preset: process.env.REACT_APP_UPLOAD_PRESET,
+            upload_preset:"ry2mqe7j",
           });
   
           return result.secure_url; // URL of the uploaded image
@@ -70,7 +70,7 @@ function Main() {
 
   return (
     <div className='blacktext'>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} >
         <div >
           <label htmlFor="locationURL">Location URL:</label>
           <input
