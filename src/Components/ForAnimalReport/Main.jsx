@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import cloudinary from 'cloudinary';
+// import cloudinary from 'cloudinary';
+import { Image } from "cloudinary-react";
+import axios from 'axios';
 
 function Main() {
   const [formData, setFormData] = useState({
@@ -13,13 +15,12 @@ function Main() {
   const [imageUrls, setImageUrls] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]);
 
-//   const cloudinaryConfig = { 
-//     cloud_name: "dndorgct9",
-//     api_key: "967523612336929",
-//     api_secret: "UFUbj4CcHCbBniV8VrDYv6-Q1sI",
-//   };
-  
-//   cloudinary.config(cloudinaryConfig);
+// Add your Cloudinary configuration here
+const cloudinaryConfig = {
+  cloudName: "dndorgct9",
+  apiKey: "967523612336929",
+  apiSecret: "UFUbj4CcHCbBniV8VrDYv6-Q1sI",
+};
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -38,27 +39,34 @@ function Main() {
 
   const handleImageUpload = async (event) => {
     const files = Array.from(event.target.files);
-  
-    try {
-      const uploadedImageUrls = await Promise.all(
-        files.map(async (file) => {
-          // Upload the image to Cloudinary
-          const result = await cloudinary.uploader.upload(file, {
-            upload_preset:"ry2mqe7j",
-          });
-  
-          return result.secure_url; // URL of the uploaded image
-        })
+    const imageArray = [];
+  if (files.length > 0) {
+   // setIsUploading(true);
+    const formData = new FormData();
+    formData.append("upload_preset", `ry2mqe7j`);
+    // Append each file to the FormData object
+    for (let i = 0; i < files.length; i++) {
+      formData.append("file", files[i]);
+
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/dndorgct9/image/upload`,
+        {
+          method: "POST",
+          body: formData,
+        }
       );
-  
-      // Update state with the uploaded image URLs
-      setImageUrls([...imageUrls, ...uploadedImageUrls]);
-      setSelectedImages([...selectedImages, ...files]);
-    } catch (error) {
-      // Handle upload error
-      console.error('Image upload failed:', error);
+
+      const data = await response.json();
+      const imageUrlsfromCloud = data.secure_url;
+      imageArray.push(imageUrlsfromCloud)
+      console.log(imageArray);
+     setTimeout(()=>{
+      setImageUrls(imageArray)
+     },4000)
     }
-  };
+  }
+  console.log(imageUrls);
+};
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -135,6 +143,7 @@ function Main() {
             multiple
             onChange={handleImageUpload}
           />
+      
         </div>
         <button type="submit">Submit</button>
       </form>
