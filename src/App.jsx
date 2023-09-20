@@ -4,6 +4,8 @@ import LandingPage from './Pages/LandingPage';
 import Home from './Pages/Home';
 import AnimalReport from './Pages/AnimalReport';
 import MyReports from './Pages/MyReports';
+import AllReports from './Pages/AllReports';
+import Track from './Pages/Track';
 
 function App() {
 
@@ -15,6 +17,8 @@ function App() {
         <Route path='/home' element={<Home />} />
         <Route path='/report' element={<AnimalReport/>}/>
         <Route path='/myreports' element={<MyReports />}/>
+        <Route path='/allreports' element={<AllReports />}/>
+        <Route path='/track' element={<Track/>}/>
       </Routes>
     </div>
    </BrowserRouter>
