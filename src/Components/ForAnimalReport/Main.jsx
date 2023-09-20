@@ -13,6 +13,8 @@ function Main() {
   });
 
   const [imageUrls, setImageUrls] = useState([]);
+  const [loadingURL, setLoadingURL]=useState(false);
+  const [imageUpload, setImageUpload] = useState(false);
   const [selectedImages, setSelectedImages] = useState([]);
 
 // Add your Cloudinary configuration here
@@ -38,6 +40,7 @@ const cloudinaryConfig = {
   };
 
   const handleImageUpload = async (event) => {
+    setImageUpload(true)
     const files = Array.from(event.target.files);
     const imageArray = [];
   if (files.length > 0) {
@@ -59,21 +62,84 @@ const cloudinaryConfig = {
       const data = await response.json();
       const imageUrlsfromCloud = data.secure_url;
       imageArray.push(imageUrlsfromCloud)
-      console.log(imageArray);
      setTimeout(()=>{
       setImageUrls(imageArray)
      },4000)
     }
   }
+  setImageUpload(false)
   console.log(imageUrls);
 };
 
-  const handleSubmit = (event) => {
+const fetchLocation = async() => {
+  setLoadingURL(true);
+  console.log("loadingURL", loadingURL);
+
+  if ('geolocation' in navigator) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        const mapsUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
+        formData.locationURL=mapsUrl;
+        // Update the state with the URL and set loading to false
+        setLoadingURL(false);
+
+        // Rest of your code...
+      },
+      (error) => {
+        // Handle the error and set loading to false
+        setLoadingURL(false);
+        alert(`Error: ${error.message}`);
+      }
+    );
+  } else {
+    // Handle the error and set loading to false
+    setLoadingURL(false);
+    alert('Geolocation is not available in your browser');
+  }
+};
+
+  const handleSubmit = async(event) => {
     event.preventDefault();
-    // Handle form submission, including formData and imageUrls
-    // Send this data to your backend API or perform other actions as needed
-    console.log('Form data:', formData);
-    console.log('Image URLs:', imageUrls);
+    try{
+      const requestBody = {
+        locationURL: formData.locationURL,
+        landmark: formData.landmark,
+        animalName: formData.animalName,
+        breed: formData.breed,
+        condition: formData.condition,
+        imageUrls: imageUrls
+      }
+      const authToken = localStorage.getItem("token")
+      console.log(authToken);
+      const response = await axios.post('http://localhost:8000/report-animal', requestBody, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.status === 200) {
+        // Handle success, e.g., show a success message to the user
+        console.log(response.data.messageggfgfqwbed7egqw8d);
+        console.log('Report added successfully');
+      } else {
+        // Handle any errors from the server
+        console.error('Failed to add report');
+      }
+    }catch(err){
+      console.log(err);
+    }finally{
+      setFormData({
+        locationURL: '',
+        landmark: '',
+        animalName: '',
+        breed: '',
+        condition: 'normal', 
+      });
+      setImageUrls([]);
+    }
   };
 
   return (
@@ -88,7 +154,11 @@ const cloudinaryConfig = {
             value={formData.locationURL}
             onChange={handleChange}
           />
-        </div>
+          At the location?
+          <button onClick={fetchLocation} disabled={loadingURL}>
+      {loadingURL ? "Fetching" : "Fetch Current Location"}
+    </button>       
+     </div>
         <div>
           <label htmlFor="landmark">Landmark:</label>
           <input
@@ -118,6 +188,8 @@ const cloudinaryConfig = {
             value={formData.breed}
             onChange={handleChange}
           />
+          Not sure of breed?
+          <button>Recognize breed</button>
         </div>
         <div>
           <label htmlFor="condition">Condition:</label>
@@ -143,7 +215,7 @@ const cloudinaryConfig = {
             multiple
             onChange={handleImageUpload}
           />
-      
+        <p>{imageUpload? "Uploading": "Upload images here"}</p>
         </div>
         <button type="submit">Submit</button>
       </form>
