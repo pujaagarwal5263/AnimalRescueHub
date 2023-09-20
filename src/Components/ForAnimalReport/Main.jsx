@@ -112,7 +112,7 @@ const fetchLocation = async() => {
         imageUrls: imageUrls
       }
       const authToken = localStorage.getItem("token")
-      console.log(authToken);
+    
       const response = await axios.post('http://localhost:8000/report-animal', requestBody, {
         headers: {
           Authorization: `Bearer ${authToken}`,
@@ -122,7 +122,7 @@ const fetchLocation = async() => {
 
       if (response.status === 200) {
         // Handle success, e.g., show a success message to the user
-        console.log(response.data.messageggfgfqwbed7egqw8d);
+        console.log(response.data.message);
         console.log('Report added successfully');
       } else {
         // Handle any errors from the server

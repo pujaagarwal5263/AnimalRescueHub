@@ -6,6 +6,7 @@ import AnimalReport from './Pages/AnimalReport';
 import MyReports from './Pages/MyReports';
 import AllReports from './Pages/AllReports';
 import Track from './Pages/Track';
+import Emergency from './Pages/Emergency';
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
         <Route path='/myreports' element={<MyReports />}/>
         <Route path='/allreports' element={<AllReports />}/>
         <Route path='/track' element={<Track/>}/>
+        <Route path='/emergency' element={<Emergency/>}/>
       </Routes>
     </div>
    </BrowserRouter>

@@ -37,15 +37,20 @@ const Main = () => {
         <p>{error}</p>
       ) : (
         <div>
-          <h2>My Reports</h2>
+          <h2>All Reports</h2>
           <ul>
             {reports.map((report) => (
+
               <li key={report.id}>
                 <p>Location URL: {report.locationURL}</p>
                 <p>Landmark: {report.landmark}</p>
                 <p>Animal: {report.animalName}</p>
+                <p>Condition: {report.condition}</p>
+                <p>status: {report.status}</p>
                 <p>Reporter: {report?.reporter?.name}</p>
+                <hr/>
               </li>
+           
             ))}
           </ul>
         </div>
