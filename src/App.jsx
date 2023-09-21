@@ -11,19 +11,9 @@ import Emergency from './Pages/Emergency';
 function App() {
 
   return (
-   <BrowserRouter>
-    <div className="pages">
-      <Routes>
-        <Route path='/' element={<LandingPage />} />
-        <Route path='/home' element={<Home />} />
-        <Route path='/report' element={<AnimalReport/>}/>
-        <Route path='/myreports' element={<MyReports />}/>
-        <Route path='/allreports' element={<AllReports />}/>
-        <Route path='/track' element={<Track/>}/>
-        <Route path='/emergency' element={<Emergency/>}/>
-      </Routes>
+    <div className="app">
+
     </div>
-   </BrowserRouter>
   )
 }
 
