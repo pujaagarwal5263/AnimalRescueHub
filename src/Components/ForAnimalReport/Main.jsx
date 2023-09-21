@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // import cloudinary from 'cloudinary';
 import { Image } from "cloudinary-react";
 import axios from 'axios';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function Main() {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [formData, setFormData] = useState({
     locationURL: '',
     landmark: '',
@@ -71,6 +74,10 @@ const cloudinaryConfig = {
   console.log(imageUrls);
 };
 
+const goToModel = () =>{
+  navigate("/breed")
+}
+
 const fetchLocation = async() => {
   setLoadingURL(true);
   console.log("loadingURL", loadingURL);
@@ -99,6 +106,16 @@ const fetchLocation = async() => {
     alert('Geolocation is not available in your browser');
   }
 };
+
+useEffect(()=>{
+  if(location?.state?.predictedClass){
+    //formData.breed =  location.state.predictedClass;
+    setFormData({
+      ...formData,
+      breed: location.state.predictedClass,
+    });
+  }
+},[]);
 
   const handleSubmit = async(event) => {
     event.preventDefault();
@@ -189,7 +206,7 @@ const fetchLocation = async() => {
             onChange={handleChange}
           />
           Not sure of breed?
-          <button>Recognize breed</button>
+          <button onClick={goToModel}>Recognize breed</button>
         </div>
         <div>
           <label htmlFor="condition">Condition:</label>
