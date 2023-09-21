@@ -5,9 +5,10 @@ import paw from '../../assets/paw.png';
 import {RiMenu2Line} from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 import {SlClose} from 'react-icons/sl';
-
+import { useNavigate } from 'react-router-dom';
 
 function Navbar() {
+  const navigate =useNavigate();
     const [isDesktop, setIsDesktop] = useState(false);
     const [openDrawer,setOpenDrawer] = useState(false);
     const [userName, setUserName] = useState('');
@@ -34,6 +35,7 @@ function Navbar() {
 
       const clearStorage = () =>{
         localStorage.clear();
+        navigate('/');
       }
 
 
