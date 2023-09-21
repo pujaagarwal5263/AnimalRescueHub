@@ -10,6 +10,7 @@ import Emergency from './Pages/Emergency';
 import Breed from './Pages/Breed';
 import AdminLogin from './Pages/AdminLogin';
 import AdminDashboard from './Pages/AdminDashboard';
+import Donation from './Components/DonationPage/Donation';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
         <Route path='/breed' element={<Breed/>}/>
         <Route path='/adminlogin' element={<AdminLogin/>}/>
         <Route path='/admindashboard' element={<AdminDashboard/>}/>
+        <Route path='/donation' element={<Donation/>}/>
       </Routes>
     </div>
    </BrowserRouter>
