@@ -32,6 +32,10 @@ function Navbar() {
         }
       }, []); 
 
+      const clearStorage = () =>{
+        localStorage.clear();
+      }
+
 
   return (
     <Box className={`Navbar ${!isDesktop ? 'mobile' : 'desktop'}`} sx={{position:"fixed", width:"100%", height:"65px",backgroundColor:"rgba(255,255,255,0.2)", justifyContent:"space-between", alignItems:"center", padding:"0 20px", boxShadow:"0px 10px 20px 3px rgba(0,0,0,0.3)", zIndex:"999"}}>
@@ -48,7 +52,7 @@ function Navbar() {
         }}>
             <MenuItem>{userName!="" ? userName : "Please login"}</MenuItem>
             <MenuItem><Link to='/home' style={{textDecoration:'none', color:"black"}}>Home</Link></MenuItem>
-            <MenuItem>Logout</MenuItem>
+            <MenuItem onClick={clearStorage}>Logout</MenuItem>
         </Menu>
 
 
