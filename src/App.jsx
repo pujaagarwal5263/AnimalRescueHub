@@ -8,6 +8,8 @@ import AllReports from './Pages/AllReports';
 import Track from './Pages/Track';
 import Emergency from './Pages/Emergency';
 import Breed from './Pages/Breed';
+import AdminLogin from './Pages/AdminLogin';
+import AdminDashboard from './Pages/AdminDashboard';
 
 function App() {
 
@@ -23,6 +25,8 @@ function App() {
         <Route path='/track' element={<Track/>}/>
         <Route path='/emergency' element={<Emergency/>}/>
         <Route path='/breed' element={<Breed/>}/>
+        <Route path='/adminlogin' element={<AdminLogin/>}/>
+        <Route path='/admindashboard' element={<AdminDashboard/>}/>
       </Routes>
     </div>
    </BrowserRouter>
