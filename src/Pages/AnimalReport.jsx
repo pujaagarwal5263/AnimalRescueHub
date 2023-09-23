@@ -5,7 +5,7 @@ import Navbar from '../Components/Common/Navbar'
 function AnimalReport() {
   return (
     <div>
-        {/* <Navbar/> */}
+        <Navbar/>
         <Main />
     </div>
   )

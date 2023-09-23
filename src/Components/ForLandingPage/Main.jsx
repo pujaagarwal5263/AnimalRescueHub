@@ -127,10 +127,10 @@ function Main() {
 
           console.log(data.message);
             // Save data to local storage
-  localStorage.setItem("token", token);
-  localStorage.setItem("userEmail", email);
-  localStorage.setItem("userID", userID);
-  localStorage.setItem("userName", name);
+            localStorage.setItem("token", token);
+            localStorage.setItem("userEmail", email);
+            localStorage.setItem("userID", userID);
+            localStorage.setItem("userName", name);
 
           setLoginData({
             loginEmail: "",
@@ -251,7 +251,7 @@ function Main() {
           style={{ p: "20px" }}
         >
           <Box
-            class="main"
+            className="main"
             sx={{
               position: "absolute",
               top: "50%",
@@ -259,16 +259,14 @@ function Main() {
               transform: "translate(-50%, -50%)",
               width: 350,
               boxShadow: 24,
-              backdropFilter: "blur(20px)",
               borderRadius: "10px",
-              p: 4,
             }}
           >
             <input type="checkbox" id="chk" aria-hidden="true" />
 
-            <div class="signup">
+            <div className="signup">
               <form onSubmit={signup}>
-                <label for="chk" aria-hidden="true">
+                <label htmlFor="chk" aria-hidden="true">
                   Sign up
                 </label>
                 <input
@@ -311,9 +309,9 @@ function Main() {
               </form>
             </div>
 
-            <div class="login">
+            <div className="login">
               <form onSubmit={login}>
-                <label for="chk" aria-hidden="true">
+                <label htmlFor="chk" aria-hidden="true">
                   Login
                 </label>
                 <input
