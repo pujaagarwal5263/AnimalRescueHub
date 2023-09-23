@@ -2,6 +2,7 @@ import { useState } from 'react'
 import bgImg from '../../assets/secondSection.jpg';
 import { Box, Button, Zoom } from '@mui/material';
 import featureData from '../../assets/featuresData';
+import {Link } from 'react-router-dom'
 
 
 function Main() {
@@ -9,7 +10,8 @@ function Main() {
   const [checked, setChecked] = useState(true);
 
   return (
-    <Box className={`h-main ${!isDesktop ? 'mobile' : 'desktop'}`} style={{height:"100vh", width:"100%", overflow:"hidden",background: `url(${bgImg})`,
+    <Box className={`h-main ${!isDesktop ? 'mobile' : 'desktop'}`} style={{minHeight:"100vh", width:"100%", overflow:"hidden",background: `url(${bgImg})`,
+    backgroundAttachment:"fixed",
     backgroundSize: 'cover',
     backgroundPosition: 'bottom',
     flexDirection: "column", paddingTop:"65px"}}>
@@ -21,7 +23,7 @@ function Main() {
                 <h2 style={{ textAlign: "center", color: "white" }}>{feature.feature}</h2>
                 <p style={{ textAlign: "center", color: "white", marginTop: "15px" }}>{feature.tagline}</p>
               </Box>
-              <Button variant="contained" sx={{ width: "100%", borderRadius: "0", backgroundColor: "#86b78d21", ":focus": { backgroundColor: "#86b78d21" } }}>Open</Button>
+              <Link to={feature.link}><Button variant="contained" sx={{ width: "100%", borderRadius: "0", backgroundColor: "#86b78d21", ":focus": { backgroundColor: "#86b78d21" } }}>Open</Button></Link>
             </Box>
           </Zoom>
         ))}
