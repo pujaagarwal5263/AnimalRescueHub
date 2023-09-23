@@ -5,7 +5,7 @@ import Navbar from '../Components/Common/Navbar'
 function MyReports() {
   return (
     <div>
-        {/* <Navbar/> */}
+        <Navbar/>
         <Main />
     </div>
   )
