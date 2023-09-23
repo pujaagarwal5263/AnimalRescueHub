@@ -28,6 +28,13 @@ html{
   background-repeat: no-repeat;
 }
 
+
+.blacktext{
+  background-color: green;
+  color: black;
+}
+
+
 @media (max-width: 767px) {
   .desktop {
     display: none;

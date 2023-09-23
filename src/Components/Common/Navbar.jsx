@@ -1,15 +1,17 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import './Navbar.css';
 import { Box, Drawer,Button, Menu, MenuItem } from '@mui/material';
 import paw from '../../assets/paw.png';
 import {RiMenu2Line} from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 import {SlClose} from 'react-icons/sl';
-
+import { useNavigate } from 'react-router-dom';
 
 function Navbar() {
+  const navigate =useNavigate();
     const [isDesktop, setIsDesktop] = useState(false);
     const [openDrawer,setOpenDrawer] = useState(false);
+    const [userName, setUserName] = useState('');
 
     const handleOpenDrawer = () => setOpenDrawer(true);
     const handleCloseDrawer = () => setOpenDrawer(false);
@@ -22,6 +24,18 @@ function Navbar() {
 
     const handleCloseMenu = () => {
         setAnchorEl(null);
+      }
+    
+      useEffect(() => {
+        const storedUserName = localStorage.getItem('userName');    
+        if (storedUserName) {
+          setUserName(storedUserName);
+        }
+      }, []); 
+
+      const clearStorage = () =>{
+        localStorage.clear();
+        navigate('/');
       }
 
 
@@ -38,9 +52,9 @@ function Navbar() {
             MenuListProps={{
                 'aria-labelledby': 'user',
         }}>
-            <MenuItem>@manmeet</MenuItem>
+            <MenuItem>{userName!="" ? userName : "Please login"}</MenuItem>
             <MenuItem><Link to='/home' style={{textDecoration:'none', color:"black"}}>Home</Link></MenuItem>
-            <MenuItem>Logout</MenuItem>
+            <MenuItem onClick={clearStorage}>Logout</MenuItem>
         </Menu>
 
 
