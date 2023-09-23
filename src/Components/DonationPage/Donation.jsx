@@ -44,8 +44,8 @@ function Donation() {
           key_secret: "CCrxVo3coD3SKNM3a0Bbh2my",
           amount: props*100, // Amount in paisa (e.g., 1000 paisa = ₹10)
           currency: "INR",
-          name: "Fundify",
-          description: "Payment for Product",
+          name: "Animal Rescue Hub",
+          description: "Donation for animals",
           handler: function (response) {
             console.log(response);
             alert("payment done");
