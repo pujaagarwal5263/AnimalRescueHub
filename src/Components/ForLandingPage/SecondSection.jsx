@@ -25,7 +25,7 @@ function SecondSection() {
       className={`moreInfo ${!isDesktop ? 'mobile' : 'desktop'}`}
       id="moreInfo"
       sx={{
-        height: "100vh",
+        minHeight: "100vh",
         width: "100%",
         overflow: "hidden",
         background: `url(${bgImg})`,
