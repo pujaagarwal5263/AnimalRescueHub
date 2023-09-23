@@ -4,7 +4,7 @@ import { Image } from "cloudinary-react";
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import bgImg from '../../assets/secondSection.jpg';
-import { Box, Button } from '@mui/material';
+import { Box, Button,Zoom } from '@mui/material';
 import {ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -24,6 +24,8 @@ function Main() {
   const [imageUpload, setImageUpload] = useState(false);
   const [selectedImages, setSelectedImages] = useState([]);
   const [isDesktop, setIsDesktop] = useState(false);
+  const [checked, setChecked] = useState(true);
+
 
 // Add your Cloudinary configuration here
 const cloudinaryConfig = {
@@ -187,6 +189,7 @@ useEffect(()=>{
         backgroundPosition: 'bottom', backgroundAttachment:"fixed",
         flexDirection: "column", width:"100%", paddingTop:"80px"}}>
         <h1 style={{color:"#fff", textAlign:"center", textDecoration:"underline"}}>Animal Report Form</h1>
+        <Zoom in={checked}>
         <form onSubmit={handleSubmit} style={{padding:"0 40px"}}>
           <div className='animal-form-div'>
             <label style={{fontSize:"20px", margin:"30px 0 0"}} htmlFor="locationURL">Location URL:</label>
@@ -313,6 +316,7 @@ useEffect(()=>{
           </div>
           <Button variant='contained' style={{backgroundColor:"#0A87BA",width:"100%", margin:"20px 0", padding:"10px 0", borderRadius:"10px", fontSize:"20px", fontWeight:"500"}} type="submit">Submit</Button>
         </form>
+        </Zoom>
       </Box>
       <ToastContainer
             position="bottom-center"
