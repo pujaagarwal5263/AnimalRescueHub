@@ -31,6 +31,7 @@ function SecondSection() {
         background: `url(${bgImg})`,
         backgroundSize: 'cover',
         backgroundPosition: 'bottom',
+        backgroundAttachment:"fixed",
         flexDirection: "column"
       }}
     >
