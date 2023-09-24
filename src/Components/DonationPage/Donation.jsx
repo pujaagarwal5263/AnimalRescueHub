@@ -45,7 +45,7 @@ function Donation() {
         const options = {
           key: "rzp_test_XphPOSB4djGspx", 
           key_secret: "CCrxVo3coD3SKNM3a0Bbh2my",
-          amount: props*100, // Amount in paisa (e.g., 1000 paisa = ₹10)
+          amount:  props  ? props*100 : 1 * 1000 , // Amount in paisa (e.g., 1000 paisa = ₹10)
           currency: "INR",
           name: "Animal Rescue Hub",
           description: "Payment for Product",
