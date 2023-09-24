@@ -4,7 +4,7 @@ import { Image } from "cloudinary-react";
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import bgImg from '../../assets/secondSection.jpg';
-import { Box, Button,Zoom } from '@mui/material';
+import { Box, Button,Zoom,CircularProgress } from '@mui/material';
 import {ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -25,6 +25,7 @@ function Main() {
   const [selectedImages, setSelectedImages] = useState([]);
   const [isDesktop, setIsDesktop] = useState(false);
   const [checked, setChecked] = useState(true);
+  const [loading, setLoading] = useState(false);
 
 
 // Add your Cloudinary configuration here
@@ -51,6 +52,7 @@ const cloudinaryConfig = {
 
   const handleImageUpload = async (event) => {
     setImageUpload(true)
+    setLoading(true)
     const files = Array.from(event.target.files);
     const imageArray = [];
   if (files.length > 0) {
@@ -77,6 +79,7 @@ const cloudinaryConfig = {
      },4000)
     }
   }
+  setLoading(false)
   setImageUpload(false)
   console.log(imageUrls);
 };
@@ -138,6 +141,7 @@ useEffect(()=>{
     }
   
     try {
+      setLoading(true)
       const requestBody = {
         locationURL: formData.locationURL,
         landmark: formData.landmark,
@@ -163,13 +167,16 @@ useEffect(()=>{
       if (response.status === 200) {
         console.log(response.data.message);
         console.log('Report added successfully');
+        setLoading(false)
         toast.success("Report Submitted!!");
       } else {
+        setLoading(false)
         toast.error("Failed to add Report.");
         console.error('Failed to add report');
       }
     } catch (err) {
       console.log(err);
+      setLoading(false)
       toast.error("An error occurred!");
     } finally {
       setFormData({
@@ -180,6 +187,7 @@ useEffect(()=>{
         condition: 'normal',
       });
       setImageUrls([]);
+      setLoading(false)
     }
   };
 
@@ -314,7 +322,7 @@ useEffect(()=>{
             />
           <p style={{textAlign:"center", color:"#fff", fontWeight:"600" }}>{imageUpload? "Uploading": "Upload images here"}</p>
           </div>
-          <Button variant='contained' style={{backgroundColor:"#0A87BA",width:"100%", margin:"20px 0", padding:"10px 0", borderRadius:"10px", fontSize:"20px", fontWeight:"500"}} type="submit">Submit</Button>
+          <Button variant='contained' style={{backgroundColor:"#0A87BA",width:"100%", margin:"20px 0", padding:"10px 0", borderRadius:"10px", fontSize:"20px", fontWeight:"500"}} disabled={loading ? true : false} type="submit">{loading ? <CircularProgress /> : 'Submit'}</Button>
         </form>
         </Zoom>
       </Box>
