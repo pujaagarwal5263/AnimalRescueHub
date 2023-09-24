@@ -314,8 +314,8 @@ const Main = () => {
                 </Box>
 
                 <Box className="info-btns" sx={{marginTop:"10px", display:"flex", justifyContent:"space-evenly", alignItems:"center"}}>
-                  <Button variant="contained" sx={{backgroundColor:"#0A87BA"}}>Check</Button>
-                  <Button variant="contained" sx={{backgroundColor:"#0A87BA"}}>Edit</Button>
+                  <Link to={`/check-report/${report._id}`}><Button variant="contained" sx={{backgroundColor:"#0A87BA"}}>Check</Button></Link>
+                  {/* <Button variant="contained" sx={{backgroundColor:"#0A87BA"}}>Edit</Button> */}
                   <Button variant="contained" onClick={() => confirmDelete(report._id)} sx={{backgroundColor:"#0A87BA"}}>Delete</Button>
                 </Box>
 
