@@ -10,8 +10,7 @@ function Main() {
   const [checked, setChecked] = useState(true);
   const [userLocation, setUserLocation] = useState(null);
 
-  
-  console.log(userLocation);
+
   useEffect(() => {
     getUserLocation()
   }, [])
