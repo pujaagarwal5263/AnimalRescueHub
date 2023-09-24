@@ -1,5 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import {
+  Box,
+  Card,
+  CardContent,
+  Typography,
+  Button,
+  Collapse,
+} from "@mui/material";
+import './Main.css'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Main = () => {
   const [loading, setLoading] = useState(true);
@@ -7,21 +19,21 @@ const Main = () => {
   const [error, setError] = useState(null);
   const [selectedReport, setSelectedReport] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [updateStatus, setUpdateStatus] = useState('Unresolved');
-  const [updateRemark, setUpdateRemark] = useState('');
+  const [updateStatus, setUpdateStatus] = useState("Unresolved");
+  const [updateRemark, setUpdateRemark] = useState("");
 
   const fetchReports = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/get-all-reports');
+      const response = await axios.get("http://localhost:8000/get-all-reports");
 
       if (response.status === 200) {
         console.log(response.data);
         setReports(response.data);
       } else {
-        setError('Failed to fetch reports');
+        setError("Failed to fetch reports");
       }
     } catch (error) {
-      setError('Error fetching reports');
+      setError("Error fetching reports");
     } finally {
       setLoading(false);
     }
@@ -35,11 +47,11 @@ const Main = () => {
     const date = new Date(dateString);
 
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const hours = String(date.getHours() % 12 || 12).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const amPm = date.getHours() >= 12 ? 'PM' : 'AM';
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours() % 12 || 12).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const amPm = date.getHours() >= 12 ? "PM" : "AM";
 
     const formattedDateTime = `${year}-${month}-${day} ${hours}:${minutes} ${amPm}`;
 
@@ -65,109 +77,168 @@ const Main = () => {
 
   const handleUpdate = async () => {
     try {
-      const token = localStorage.getItem("token")
-      const response = await axios.post('http://localhost:8000/admin-update-report', {
-        reportId: selectedReport._id,
-        status: updateStatus,
-        remark: updateRemark,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const token = localStorage.getItem("token");
+      const response = await axios.post(
+        "http://localhost:8000/admin-update-report",
+        {
+          reportId: selectedReport._id,
+          status: updateStatus,
+          remark: updateRemark,
         },
-      });
-  
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
       if (response.status == 200) {
-        console.log('Report updated successfully');
+        console.log("Report updated successfully");
+        toast.success("Report updated successfully");
         // You may want to update the reports state or reload the data here
       } else {
-        setError('Failed to update report');
+        setError("Failed to update report");
       }
     } catch (error) {
-      setError('Error updating report');
+      setError("Error updating report");
     } finally {
       closeModal();
       fetchReports();
       setSelectedReport(null);
-      setUpdateStatus('Unresolved');
-      setUpdateRemark('');
+      setUpdateStatus("Unresolved");
+      setUpdateRemark("");
     }
   };
 
   return (
-    <div style={{ backgroundColor: 'red' }}>
+    <Box  p={2}>
       {loading ? (
-        <p>Loading...</p>
+        <Typography variant="h5">Loading...</Typography>
       ) : error ? (
-        <p>{error}</p>
+        <Typography variant="h5" color="error">
+          {error}
+        </Typography>
       ) : (
         <div>
-          <h2>All Reports</h2>
+          <Typography variant="h4" gutterBottom>
+            All Reports
+          </Typography>
           <ul>
             {reports.map((report) => (
-              <li key={report.id}>
-                <p>Location URL: {report.locationURL}</p>
-                <p>Landmark: {report.landmark}</p>
-                <p>Animal: {report.animalName}</p>
-                <p>Condition: {report.condition}</p>
-                <p>Status: {report.status}</p>
-                <p>Breed: {report.breed}</p>
-                <p>Reporter: {report?.reporter?.name}</p>
-                <p>
-                  Updates:{' '}
+              <Card
+                key={report.id}
+                variant="outlined"
+                style={{ marginBottom: "10px" }}
+              >
+                <CardContent>
+                  <Typography variant="h6">
+                    Reporter: {report?.reporter?.name}
+                  </Typography>
+                  <Typography>Landmark: {report.landmark}</Typography>
+                  <Typography>Animal: {report.animalName}</Typography>
+                  <Typography>Condition: {report.condition}</Typography>
+                  <Typography>Status: {report.status}</Typography>
+                  <Typography variant="h6">Last Update:</Typography>
                   {report?.updatesArray?.length !== 0 ? (
-                    <ul>
-                      Updates available
-                      {report?.updatesArray?.map((data) => (
-                        <li key={data._id}>
-                          Remark: {data.remark ? data.remark : 'No remark available'}
-                          Update Time: {formatDate(data.updateTime)}
-                          Status: {data.status}
+                    <div>
+                      <ul className="updates-list">
+                        {/* Get the last update from the updatesArray */}
+                        <li>
+                          <Typography variant="body1">
+                            Remark:{" "}
+                            {report.updatesArray[report.updatesArray.length - 1]
+                              .remark || "No remark available"}
+                          </Typography>
+                          <Typography variant="body1">
+                            Time:{" "}
+                            {formatDate(
+                              report.updatesArray[
+                                report.updatesArray.length - 1
+                              ].updateTime
+                            )}
+                          </Typography>
+                          <Typography variant="body1">
+                            Status:{" "}
+                            {
+                              report.updatesArray[
+                                report.updatesArray.length - 1
+                              ].status
+                            }
+                          </Typography>
                         </li>
-                      ))}
-                    </ul>
+                      </ul>
+                    </div>
                   ) : (
                     <div>No updates available</div>
                   )}
-                </p>
-                <button onClick={() => openModal(report)}>Update</button>
-                <hr />
-              </li>
+                  <Button
+                    variant="contained"
+                    onClick={() => openModal(report)}
+                    style={{ marginTop: "10px" }}
+                  >
+                    Update
+                  </Button>
+                  <Button
+                    component={Link}
+                    to={`/report/${report._id}`}
+                    variant="contained"
+                    color="primary"
+                    style={{ marginLeft: "10px", marginTop: "10px" }}
+                  >
+                    More
+                  </Button>
+                </CardContent>
+              </Card>
             ))}
           </ul>
         </div>
       )}
 
       {isModalOpen && (
-        <div className="modal">
-          <div className="modal-content">
+        <div className="modal-overlay">
+          <div className="modal">
             <span className="close" onClick={closeModal}>
               &times;
             </span>
-            <h2>Update Report</h2>
-            <label>Status:</label>
-            <select value={updateStatus} onChange={handleStatusChange}>
+            <Typography variant="h3">Update Report</Typography>
+            <label style={{color:"black"}}>Status:</label>
+            <select
+              value={updateStatus}
+              onChange={handleStatusChange}
+              style={{ marginBottom: "10px" }}
+            >
               <option value="Unresolved">Unresolved</option>
               <option value="Picked up">Picked up</option>
               <option value="Admitted">Admitted</option>
-              <option value="Police case registered">Police case registered</option>
+              <option value="Police case registered">
+                Police case registered
+              </option>
               <option value="Released">Released</option>
               <option value="Closed">Closed</option>
             </select>
             <br />
-            <label>Remark:</label>
+            <label style={{color:"black"}}>Remark:</label>
             <textarea
               value={updateRemark}
               onChange={handleRemarkChange}
               rows="4"
               cols="50"
+              style={{ marginBottom: "10px" }}
             ></textarea>
             <br />
-            <button onClick={handleUpdate}>Submit</button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleUpdate}
+              style={{ marginBottom: "10px" }}
+            >
+              Submit
+            </Button>
           </div>
         </div>
       )}
-    </div>
+       <ToastContainer />
+    </Box>
   );
 };
 

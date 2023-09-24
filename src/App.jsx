@@ -11,6 +11,7 @@ import Breed from './Pages/Breed';
 import AdminLogin from './Pages/AdminLogin';
 import AdminDashboard from './Pages/AdminDashboard';
 import Donation from './Components/DonationPage/Donation';
+import ReportDetails from './Pages/ReportDetails';
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
         <Route path='/adminlogin' element={<AdminLogin/>}/>
         <Route path='/admindashboard' element={<AdminDashboard/>}/>
         <Route path='/donation' element={<Donation/>}/>
+        <Route path='/report/:id' element={<ReportDetails/>}/>
       </Routes>
     </div>
    </BrowserRouter>

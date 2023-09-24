@@ -1,15 +1,25 @@
 import { Box } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Typography from '@mui/material/Typography';
 import LinearProgress from '@mui/material/LinearProgress';
 import Button from '@mui/material/Button';
 import Logo from '../../assets/razorpay.svg';
 import Cat from '../../assets/we.jpg';
+import { SettingsOutlined } from "@material-ui/icons";
 
 function Donation() {
 
   const [Payment,setPayment ] = useState(0);
+  const [displayPay, setDisplayPay] = useState(0);
   const [progress, setProgress] = React.useState(0);
+
+  useEffect(()=>{
+    const oldPay = localStorage.getItem("payment")
+    if(oldPay){
+      setDisplayPay(parseInt(oldPay))
+      setProgress(parseInt(oldPay)/50)
+    }
+  },[displayPay])
 
       const buttonStyle1 = {
        backgroundColor:"#645BFB", 
@@ -35,9 +45,19 @@ function Donation() {
       };
 
       const handleDonate =async() =>{
-        handlePayment(Payment) ;
-        setProgress(Payment/20)
-           }
+        handlePayment(Payment);
+        const oldPay = localStorage.getItem("payment");
+        if(oldPay){
+          const newPay = parseInt(oldPay) + Payment;
+          localStorage.setItem("payment",newPay)
+          setProgress(newPay/50)
+          setDisplayPay(parseInt(newPay))
+        }else{
+          localStorage.setItem("payment",Payment)
+          setProgress(Payment/50)
+          setDisplayPay(parseInt(Payment))
+        }
+      }
 
       const handlePayment = (props) => {
         console.log(props);
@@ -118,7 +138,7 @@ function Donation() {
       flex: "1", // Add this line to make it flexible and push to the left
     }}
   >
-    ₹ {Payment} donated
+    ₹ {displayPay} donated
   </Typography>
   <Typography
     style={{
@@ -129,7 +149,7 @@ function Donation() {
       textAlign: "right", // Align the text to the right within the flex item
     }}
   >
-    ₹ 2000 goal
+    ₹ 5000 goal
   </Typography>
 </Box>
 

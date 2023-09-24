@@ -1,0 +1,132 @@
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { Box, Typography, Link, Button, Collapse } from '@mui/material';
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+
+const Main = () => {
+    const navigate = useNavigate();
+  const { id } = useParams();
+  const [report, setReport] = useState(null);
+  const [showUpdates, setShowUpdates] = useState(false);
+
+  const formatDateTime = (timestamp) => {
+    const date = new Date(timestamp);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const formattedTime = (hours % 12) + ':' + minutes + ' ' + ampm;
+    return `${year}-${month}-${day} ${formattedTime}`;
+  };
+
+  const fetchReport = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get(`http://localhost:8000/get-report-by-id/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.status === 200) {
+        const data = response.data.report;
+        setReport(data);
+      } else {
+        console.log('Failed to fetch report');
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchReport();
+  }, []);
+
+  const handleToggleUpdates = () => {
+    setShowUpdates(!showUpdates);
+  };
+  const goBack =  () =>{
+    navigate("/admindashboard")
+  }
+
+  return (
+    <Box p={4}>
+      <Typography variant="h4">Report Details</Typography>
+
+      {report ? (
+        <div>
+          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            {/* Basic Details */}
+            <div style={{ flex: 1 }}>
+              <Typography variant="body1">Reporter: {report?.reporter?.name}</Typography>
+              <Typography variant="body1">
+                Location: <Link href={report.locationURL} target="_blank" rel="noopener noreferrer">View on Map</Link>
+              </Typography>
+              <Typography variant="body1">Landmark: {report.landmark}</Typography>
+              <Typography variant="body1">Animal: {report.animalName}</Typography>
+              <Typography variant="body1">Breed: {report.breed}</Typography>
+              <Typography variant="body1">Condition: {report.condition}</Typography>
+              <Typography variant="body1">Status: {report.status}</Typography>
+            </div>
+
+            {/* Images */}
+            {report.imageUrls.length > 0 && (
+              <div style={{ maxWidth: '500px', width: '100%' }}>
+                <Carousel infiniteLoop autoPlay showThumbs={false}>
+                  {report.imageUrls.map((imageUrl, index) => (
+                    <div key={index}>
+                      <img src={imageUrl} alt={`Image ${index}`} />
+                    </div>
+                  ))}
+                </Carousel>
+              </div>
+            )}
+          </div>
+
+          <Button variant="outlined" onClick={handleToggleUpdates}>
+            {showUpdates ? 'Hide Updates' : 'Show Updates'}
+          </Button>
+
+          <Button variant='outlined' onClick={goBack}>
+             Back
+          </Button>
+
+          <Collapse in={showUpdates}>
+            
+            {report.updatesArray?.length > 0 ? (
+                <Box>
+                <Typography variant="h5" mt={4}>
+                Updates:
+              </Typography>
+              <ul className="updates-list">
+                {report.updatesArray.map((update) => (
+                  <li key={update._id} className="update-item">
+                    <Typography variant="body1">
+                      Update Time: {formatDateTime(update.updateTime)}
+                    </Typography>
+                    <Typography variant="body1">Status: {update.status}</Typography>
+                    {update.remark && (
+                      <Typography variant="body1">Remark: {update.remark}</Typography>
+                    )}
+                  </li>
+                ))}
+              </ul>
+              </Box>
+            ) : (
+              <Typography variant="body1">No updates available</Typography>
+            )}
+          </Collapse>
+        </div>
+      ) : (
+        <Typography variant="body1">Fetching report...</Typography>
+      )}
+    </Box>
+  );
+};
+
+export default Main;
