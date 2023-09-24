@@ -5,6 +5,8 @@ import { DropzoneArea } from "material-ui-dropzone";
 import { Backdrop, Chip, CircularProgress, Grid, Stack } from "@mui/material";
 import Camera from './Camera';
 import { useNavigate } from 'react-router-dom';
+import { Box,Button,Zoom } from '@mui/material';
+import bgImg from '../../assets/secondSection.jpg';
 
 
 const Main = () => {
@@ -14,6 +16,8 @@ const Main = () => {
     const [loading, setLoading] = useState(false);
     const [confidence, setConfidence] = useState(null);
     const [predictedClass, setPredictedClass] = useState(null);
+    const [isDesktop, setIsDesktop] = useState(false);
+    const [checked, setChecked] = useState(true);
   
     const [data, setData] = useState("");
 
@@ -135,10 +139,20 @@ const Main = () => {
     };
 
   return (
-    <div>
-    <Grid container className="App" direction="column" alignItems="center" justifyContent="center" marginTop="12%">
+      <Box className={`recognise-breed ${!isDesktop ? 'mobile' : 'desktop'}`} sx={{
+      minHeight: "100vh",
+        width: "100%",
+        overflow: "hidden",
+        background: `url(${bgImg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'bottom',
+        backgroundAttachment:"fixed",
+        flexDirection: "column"
+    }}>
+    <Zoom in={checked}>
+    <Grid container className="App" direction="column" alignItems="center" justifyContent="center" sx={{padding:"80px 0"}}>
       <Grid item>
-        <h1 style={{ textAlign: "center", marginBottom: "1.5em" }}>Get Your Animal Breed</h1>
+        <h1 style={{ textAlign: "center", marginBottom: "1.5em", color:"#fff" }}>Get Your Animal Breed</h1>
         <DropzoneArea
           acceptedFiles={["image/*"]}
           dropzoneText={"Add an image"}
@@ -147,15 +161,15 @@ const Main = () => {
           filesLimit={1}
           showAlerts={["error"]}
         />
-        <Stack style={{ marginTop: "2em", width: "12rem" }} direction="row" spacing={1}>
+        <Stack sx={{ margin: "2em 4rem", width: "12rem" }} direction="row" spacing={1}>
           <Chip
             label={predictedClass === null ? "Prediction:" : `Prediction: ${predictedClass}`}
-            style={{ justifyContent: "left" }}
+            style={{ justifyContent: "left",color:"#fff",fontSize:"20px", padding:"5px " }}
             variant="outlined"
           />
           <Chip
             label={confidence === null ? "Confidence:" : `Confidence: ${confidence}%`}
-            style={{ justifyContent: "left" }}
+            style={{ justifyContent: "left", color:"#fff", fontSize:"20px", padding:"5px " }}
             variant="outlined"
           />
         </Stack>
@@ -164,12 +178,13 @@ const Main = () => {
 
       </Grid>
     </Grid>
+    </Zoom>
 
     <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={loading}>
       <CircularProgress color="inherit" />
     </Backdrop>
-    <button onClick={goBackToForm}>Done</button>
-  </div>
+    <Zoom in={checked}><Button onClick={goBackToForm} variant='contained' style={{width:"50%", margin:"0 auto"}}>Done</Button></Zoom>
+  </Box>
 
   )
 }

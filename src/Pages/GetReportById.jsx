@@ -1,14 +1,15 @@
 import React from 'react'
-import Main from '../Components/ForMyReports/Main'
 import Navbar from '../Components/Common/Navbar'
+import Main from '../Components/ForGetReportById/Main'
 
-function MyReports() {
+
+function GetReportById() {
   return (
     <div>
-        <Navbar/>
+        <Navbar />
         <Main />
     </div>
   )
 }
 
-export default MyReports
+export default GetReportById

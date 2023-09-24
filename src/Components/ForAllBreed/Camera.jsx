@@ -1,5 +1,8 @@
 import React, { useRef, useState } from "react";
 import Webcam from "react-webcam";
+import {ToastContainer, toast} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
+import { Button } from '@mui/material';
 
 const Camera = (props) => {
   const webcamRef = useRef(null);
@@ -30,12 +33,14 @@ const Camera = (props) => {
   };
 
   return (
-    <div>
-      <button onClick={startCapture}>Start Camera</button>
-      <button onClick={capturePhoto}>Capture Photo</button>
+    <div style={{width:"100%"}}>
+      <div className="camera-btns" style={{display:"flex", justifyContent:"space-around"}}>
+        <Button variant="contained" onClick={startCapture}>Start Camera</Button>
+        <Button variant="contained" onClick={capturePhoto}>Capture Photo</Button>
+      </div>
       <Webcam
         audio={false}
-        height={400}
+        height={200}
         ref={webcamRef}
         screenshotFormat="image/jpeg"
         width={400}
@@ -47,6 +52,19 @@ const Camera = (props) => {
           style={{ marginTop: "20px", width: "100%" }}
         />
       )}
+
+        <ToastContainer
+            position="bottom-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="colored"
+        />
     </div>
   );
 };

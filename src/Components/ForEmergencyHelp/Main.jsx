@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react'
+import { Box,Button,Zoom } from '@mui/material'
+import bgImg from '../../assets/secondSection.jpg';
+import { Link } from 'react-router-dom';
 
-function Doctors() {
-  const [hospitals, setHospitals] = useState([]);
+
+function Main() {
+
+  const [isDesktop, setIsDesktop] = useState(false);
+  const [checked, setChecked] = useState(true);
   const [userLocation, setUserLocation] = useState(null);
-  const [isLoading, setLoading] = useState(true);
+
+
 
   useEffect(() => {
-    getUserLocation();
-  }, []);
-
-  useEffect(() => {
-    if (userLocation) {
-      findNearbyHospitals(userLocation.latitude, userLocation.longitude);
-    }
-  }, [userLocation]);
+    getUserLocation()
+  }, [])
 
   const getUserLocation = () => {
     if ('geolocation' in navigator) {
@@ -33,74 +34,34 @@ function Doctors() {
     }
   };
 
-  const findNearbyHospitals = async (latitude, longitude) => {
-    const API_KEY = 'AIzaSyCRgAdyEX-uXCg6-vevbgowW6OSaIHRdtM';
-    fetch(
-      `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&type=veterinary_care&key=${API_KEY}`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        const results = data.results;
-        console.log(results);
-        setHospitals(results);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-        setLoading(false); 
-      });
-  };
-
 
   return (
-    <div p={4}>
-      <h2 as="h2" size="xl" mb={4}>
-        Nearby Hospitals
-      </h2>
-      {isLoading ? (
-        <div align="center" justify="center" height="200px">
-          {/* <CircularProgress isIndeterminate color="teal.500" /> */}
-        </div>
-      ) : (
-        <>
-          {userLocation && (
-            <p>
-              Current location successfully fetched!! {userLocation.latitude}, {userLocation.longitude}
-            </p>
-          )}
-          <div flexWrap="wrap">
-            {hospitals.map((hospital, index) => (
-              <div
-                key={index}
-                p={4}
-                m={2}
-                width={{ base: '100%', sm: 'calc(50% - 16px)', md: 'calc(33.33% - 16px)' }}
-                borderWidth="1px"
-                borderRadius="md"
-                divShadow="md"
-                bg="white"
-              >
-                <h2 as="h3" size="lg">
-                  {hospital.name}
-                </h2>
-                <p>
-                  Code: {hospital.plus_code?.compound_code}
-                  <br />
-                  Rating: {hospital.rating}
-                  <br />
-                  Reviews: {hospital.user_ratings_total}
-                  <br />
-                  Vicinity: {hospital.vicinity}
-                </p>
-              </div>
-            ))}
-          </div>
-        </>
-      )}
-    </div>
-  );
+    <Box className={`emergencyServices ${!isDesktop ? 'mobile' : 'desktop'}`} sx={{
+      minHeight: "100vh",
+        width: "100%",
+        overflow: "hidden",
+        background: `url(${bgImg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'bottom',
+        backgroundAttachment:"fixed",
+        flexDirection: "column"
+    }}>
+      <Zoom in={checked}>
+        <Box className='inner-content-emergency' sx={{ padding:"100px 30px 20px", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center"}}>
+          <h1 style={{color:"#fff",textAlign:"center", textDecoration:"underline"}}>Emergency Services</h1>
+          <p style={{fontWeight:"600", textAlign:"center", margin:"30px 0 20px", fontSize:"20px",color:"#fff", lineHeight:"1.6em"}}>Discover Nearby Animal Care Centers and Healing centers for in need Animals</p>
+          {!userLocation && <p style={{color:"#fff", textAlign:"center", fontSize:"18px", backgroundColor:"#0A87BA", padding:"10px", borderRadius:"10px"}}><b>Location Access denied.</b> Need location access to find Animal Care centers near you.</p>}
+          {userLocation && <Link to={`https://www.google.com/maps/search/animal+hospital+near+me/@${userLocation?.latitude},${userLocation?.longitude},13z/data=!3m1!4b1?entry=ttu`} target='_blank'><Button variant="contained" sx={{backgroundColor:"#0A87BA"}}>Click here</Button></Link>}
+
+          <p style={{fontWeight:"600", textAlign:"center", margin:"40px 0 20px", fontSize:"20px",color:"#fff", lineHeight:"1.6em"}}>Discover Nearby Animal Care Shelters</p>
+          {!userLocation && <p style={{color:"#fff", textAlign:"center", fontSize:"18px", backgroundColor:"#0A87BA", padding:"10px", borderRadius:"10px"}}><b>Location Access denied.</b> Need location access to find Animal Care centers near you.</p>}
+          {userLocation && <Link to={`https://www.google.com/maps/search/animal+shelter+near+me/@${userLocation?.latitude},${userLocation?.longitude},12z/data=!3m1!4b1?entry=ttu`} target='_blank'><Button variant="contained" sx={{backgroundColor:"#0A87BA"}}>Click here</Button></Link>}
+        </Box>
+      </Zoom>
+
+        
+    </Box>
+  )
 }
 
-export default Doctors;
-
-
+export default Main
