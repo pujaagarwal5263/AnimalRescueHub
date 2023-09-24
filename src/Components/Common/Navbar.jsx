@@ -69,9 +69,9 @@ function Navbar() {
 
                 <Link to="/myReports" style={{color:"#fff", fontSize:"22px", fontWeight:"500", margin:"20px 0"}}>Check Rescue Status</Link>
 
-                <Link to="/home" style={{color:"#fff", fontSize:"22px", fontWeight:"500", margin:"20px 0"}}>Breed Recognition</Link>
+                <Link to="/breed" style={{color:"#fff", fontSize:"22px", fontWeight:"500", margin:"20px 0"}}>Breed Recognition</Link>
                 
-                <Link to="/home" style={{color:"#fff", fontSize:"22px", fontWeight:"500", margin:"20px 0"}}>Emergency Services</Link>
+                <Link to="/emergency" style={{color:"#fff", fontSize:"22px", fontWeight:"500", margin:"20px 0"}}>Emergency Services</Link>
 
                 {/* <Link to="/home" style={{color:"#fff", fontSize:"22px", fontWeight:"500", margin:"20px 0"}}>About Us</Link>
 
