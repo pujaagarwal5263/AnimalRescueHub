@@ -33,7 +33,8 @@ const Main = () => {
           if(response.data.length==0){
             console.log("No updates available");
           }else{
-            setReportData(response.data);
+           
+            setReportData(response.data.updates);
           }
         } else {
           setError('Failed to fetch report');
