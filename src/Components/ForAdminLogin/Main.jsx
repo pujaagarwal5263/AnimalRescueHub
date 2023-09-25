@@ -1,43 +1,18 @@
 import React, { useState } from 'react';
-import { Box, Button, TextField, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { Box, Button, TextField, Typography, IconButton, InputAdornment } from '@mui/material';
+import { Visibility, VisibilityOff } from '@material-ui/icons';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useNavigate } from 'react-router-dom';
-import Cat from '../../assets/er.avif';
-import {  IconButton, InputAdornment } from '@mui/material';
-import { Visibility, VisibilityOff } from '@material-ui/icons';
-
-
-
+import Cat from '../../assets/rt.png';
+import '../ForAdminDashboard/Main.css'
 
 const Main = () => {
-
-
   const navigate = useNavigate()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
-  const [isFocused1, setIsFocused1] = useState(false);
 
-
-
-  const handleInputFocus = () => {
-    setIsFocused(true);
-  };
-
-  const handleInputBlur = () => {
-    setIsFocused(false);
-  };
-
-  const handleInputBlur1 = () => {
-    setIsFocused1(false);
-  };
-
-
-  const handleInputFocus1 = () => {
-    setIsFocused1(true);
-  };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -58,7 +33,6 @@ const Main = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // Show a success toast notification
         toast.success('Login successful');
         localStorage.setItem('token', data.token);
         navigate("/admindashboard")
@@ -74,44 +48,37 @@ const Main = () => {
     setShowPassword(!showPassword);
   };
 
-  const inputStyles = {
-    borderColor: isFocused ? 'red' : 'green', // Change border color when focused
-    boxShadow: isFocused ? '1px 1px 10px red' : 'none', // Add box shadow when focused
-  };
-
-  const inputStyles1 = {
-    borderColor: isFocused1 ? 'red' : 'green', // Change border color when focused
-    boxShadow: isFocused1 ? '1px 1px 10px red' : 'none', // Add box shadow when focused
-  };
-
   return (
     <Box display="flex" style={{ overflow: "hidden"}}>
       <Box >
         <img src={Cat } width="900px" height="900px"/>
       </Box>
           <Box
-          padding={15}
-      w="80%"
-      marginTop={16}
+          padding="100px"
+          paddingTop="200px"
+      w="100%"
+  
+      backgroundColor="black"
+      color="white"
     >
-      <Typography variant="h5" gutterBottom color="gray" fontWeight="bold">
+      <Typography variant="h5" gutterBottom color="white" fontWeight="bold" > 
         Log in
       </Typography>
-      <Typography variant="h6" gutterBottom color="gray" fontWeight="lighter" >
+      <Typography variant="h6" gutterBottom color="white" fontWeight="lighter" >
        Get access to your account
       </Typography>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} >
         <TextField
           type="email"
           value={email}
           placeholder='Enter your email'
-          onFocus={handleInputFocus}
           onChange={(e) => setEmail(e.target.value)}
           required
           margin="normal"
           fullWidth
-          onBlur={handleInputBlur}
-          style={inputStyles}
+          style={{
+            backgroundColor:"white"
+          }}
         />
         <TextField
           type={showPassword ? 'text' : 'password'}
@@ -120,10 +87,10 @@ const Main = () => {
           value={password}
           required
           margin="normal"
-          onBlur={handleInputBlur1}
-          onFocus={handleInputFocus1}
           fullWidth
-          style={inputStyles1}
+          style={{
+            backgroundColor:"white"
+          }}
           InputProps={{
            
             endAdornment: (
@@ -146,7 +113,6 @@ const Main = () => {
       <ToastContainer />
     </Box>
     </Box>
-   
   );
 };
 

@@ -4,7 +4,7 @@ import Navbar from '../Components/Common/Navbar'
 
 function AdminDashboard() {
   return (
-    <div>
+    <div style={{ backgroundColor:'black'}}>
         {/* <Navbar/> */}
         <Main />
     </div>

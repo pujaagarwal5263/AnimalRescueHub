@@ -150,6 +150,14 @@ function Main() {
     }
   };
 
+  const handleAdmin = () => {
+    navigate("/adminlogin")
+  }
+  const handleMobile = () => {
+    
+   
+  }
+
   return (
     <Slide direction="right" in={checked} mountOnEnter unmountOnExit>
       <Box
@@ -163,6 +171,15 @@ function Main() {
           overflow: "hidden",
         }}
       >
+        {isDesktop ?   <div class="center">
+        <button class="circle-button" 
+        onClick={handleMobile}
+        style={{ transition: "background-color 0.3s" }}
+
+        >Mobile Version</button>
+        <button class="circle-button" onClick={handleAdmin}>Admin Login here</button>
+    </div> : '' }
+        
         <div
           className={`lp-logo ${!isDesktop ? "mobile" : "desktop"}`}
           style={{
