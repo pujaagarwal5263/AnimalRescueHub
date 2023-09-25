@@ -176,8 +176,8 @@ function Main() {
         onClick={handleMobile}
         style={{ transition: "background-color 0.3s" }}
 
-        >Mobile Version</button>
-        <button class="circle-button" onClick={handleAdmin}>Admin Login here</button>
+        >User? Go to Mobile </button>
+        <button class="circle-button" onClick={handleAdmin}>Admin? Login Here</button>
     </div> : '' }
         
         <div

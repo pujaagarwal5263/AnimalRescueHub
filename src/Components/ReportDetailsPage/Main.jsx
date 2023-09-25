@@ -55,14 +55,19 @@ const Main = () => {
   }
 
   return (
-    <Box p={4}>
-      <Typography variant="h4">Report Details</Typography>
-
+    <Box p={4} backgroundColor="black" minHeight={"100vh"} color="white">
+      <Typography variant="h4" textAlign="center">Report Details</Typography>
+      <br/>
       {report ? (
         <div>
-          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent:"space-around" }}>
             {/* Basic Details */}
-            <div style={{ flex: 1 }}>
+            <Box style={{ flex: 1}}>
+              <Box  width="35vw" px="30px" py="30px" height="30vh" borderRadius="5px" style={{
+          background:
+            "linear-gradient(135deg, #2E2E2E 0%, #1E1E1E 100%)",
+          boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.5)",
+        }}>
               <Typography variant="body1">Reporter: {report?.reporter?.name}</Typography>
               <Typography variant="body1">
                 Location: <Link href={report.locationURL} target="_blank" rel="noopener noreferrer">View on Map</Link>
@@ -72,7 +77,8 @@ const Main = () => {
               <Typography variant="body1">Breed: {report.breed}</Typography>
               <Typography variant="body1">Condition: {report.condition}</Typography>
               <Typography variant="body1">Status: {report.status}</Typography>
-            </div>
+              </Box>
+            </Box>
 
             {/* Images */}
             {report.imageUrls.length > 0 && (
@@ -87,7 +93,7 @@ const Main = () => {
               </div>
             )}
           </div>
-
+<br></br>
           <Button variant="outlined" onClick={handleToggleUpdates}>
             {showUpdates ? 'Hide Updates' : 'Show Updates'}
           </Button>
@@ -103,9 +109,18 @@ const Main = () => {
                 <Typography variant="h5" mt={4}>
                 Updates:
               </Typography>
-              <ul className="updates-list">
+              <br/>
+              <ul className="updates-list" style={{listStyle:"none"}}>
                 {report.updatesArray.map((update) => (
                   <li key={update._id} className="update-item">
+                    <Box style={{
+          background:
+            "linear-gradient(135deg, #2E2E2E 0%, #1E1E1E 100%)",
+          boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.5)",
+          width:"35vw",
+          padding:"10px",
+          borderRadius:"5px"
+        }}>
                     <Typography variant="body1">
                       Update Time: {formatDateTime(update.updateTime)}
                     </Typography>
@@ -113,12 +128,18 @@ const Main = () => {
                     {update.remark && (
                       <Typography variant="body1">Remark: {update.remark}</Typography>
                     )}
+                    
+                    </Box>
+                    <br/>
                   </li>
                 ))}
               </ul>
               </Box>
             ) : (
+              <div>
+                <br/>
               <Typography variant="body1">No updates available</Typography>
+              </div>
             )}
           </Collapse>
         </div>

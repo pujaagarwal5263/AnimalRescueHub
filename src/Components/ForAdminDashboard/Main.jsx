@@ -242,7 +242,7 @@ const Main = () => {
     // </Box>
     <Box p={2}>
     {loading ? (
-      <Typography variant="h5">Loading...</Typography>
+      <Typography variant="h5" color="white">Loading...</Typography>
     ) : error ? (
       <Typography variant="h5" color="error">
         {error}
@@ -353,8 +353,8 @@ const Main = () => {
   <div className="modal-overlay">
     <div className="modal-content">
    
-      <Box style={{backgroundColor:"gray"}}>
-      <Typography variant="h3" style={{ marginBottom: "3px" ,textAlign:"center",color:'black'}}>
+      <Box >
+      <Typography variant="h3" style={{ marginBottom: "3px" ,textAlign:"center",color:'white'}}>
         Update Report
       </Typography>
       </Box>
