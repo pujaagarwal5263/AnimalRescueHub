@@ -1,4 +1,4 @@
-/* Modal overlay */
+
 .modal-overlay {
     display: flex;
     justify-content: center;
@@ -12,7 +12,6 @@
     z-index: 1000;
   }
   
-  /* Modal container */
   .modal {
     background-color: white;
     padding: 20px;
@@ -21,10 +20,9 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     position: relative;
     text-align: center;
-    color: black !important; /* Add this line to set text color to black */
+    color: black !important; 
   }
   
-  /* Close button */
   .close {
     position: absolute;
     top: 10px;
@@ -33,7 +31,6 @@
     cursor: pointer;
   }
   
-  /* Add more styles as needed */
   
 
   .center {
@@ -46,22 +43,21 @@
 .circle-button {
   width: 100px;
   height: 100px;
-  border-radius: 50%; /* Makes the button circular */
-  background-color: #007bff; /* Button background color */
-  color: white; /* Text color */
+  border-radius: 50%; 
+  background-color: #007bff;
+  color: white;
   font-size: 16px;
-  border: none; /* Remove button border */
+  border: none; 
   cursor: pointer;
-  margin: 10px; /* Add some spacing between the buttons */
-  outline: none; /* Remove the default focus outline */
+  margin: 10px;
+  outline: none;
 }
 
 .circle-button:hover {
-  background-color: #0056b3; /* Button background color on hover */
+  background-color: #0056b3; 
 }
 
 
-/* Add this to your Main.css */
 
 .modal-overlay {
   position: fixed;
@@ -69,7 +65,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6); /* Add a semi-transparent background overlay */
+  background: rgba(0, 0, 0, 0.6); 
   display: flex;
   justify-content: center;
   align-items: center;

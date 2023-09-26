@@ -6,11 +6,10 @@ import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 const Main = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const { id } = useParams();
   const [report, setReport] = useState(null);
   const [showUpdates, setShowUpdates] = useState(false);
-
   const formatDateTime = (timestamp) => {
     const date = new Date(timestamp);
     const year = date.getFullYear();
@@ -56,13 +55,17 @@ const Main = () => {
 
   return (
     <Box p={4} backgroundColor="black" minHeight={"100vh"} color="white">
+      <Box style={{
+          backgroundColor:'white',
+          background:"linear-gradient(135deg, #2E2E2E 0%, #1E1E1E 100%)",
+        boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.5)"
+        }}>
       <Typography variant="h4" textAlign="center">Report Details</Typography>
-      <br/>
+      </Box>
       {report ? (
         <div>
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent:"space-around" }}>
-            {/* Basic Details */}
-            <Box style={{ flex: 1}}>
+            <Box style={{ flex: 1 ,marginLeft:"123px" ,border:"1px solid black",marginTop:"23px"}}>
               <Box  width="35vw" px="30px" py="30px" height="30vh" borderRadius="5px" style={{
           background:
             "linear-gradient(135deg, #2E2E2E 0%, #1E1E1E 100%)",
@@ -79,8 +82,7 @@ const Main = () => {
               <Typography variant="body1">Status: {report.status}</Typography>
               </Box>
             </Box>
-
-            {/* Images */}
+            <Box style={{marginTop:"50px", border:"1px solid black",}}>
             {report.imageUrls.length > 0 && (
               <div style={{ maxWidth: '500px', width: '100%' }}>
                 <Carousel infiniteLoop autoPlay showThumbs={false}>
@@ -92,18 +94,9 @@ const Main = () => {
                 </Carousel>
               </div>
             )}
+            </Box>
           </div>
-<br></br>
-          <Button variant="outlined" onClick={handleToggleUpdates}>
-            {showUpdates ? 'Hide Updates' : 'Show Updates'}
-          </Button>
-
-          <Button variant='outlined' onClick={goBack}>
-             Back
-          </Button>
-
-          <Collapse in={showUpdates}>
-            
+          <Collapse in={showUpdates} style={{marginLeft:"123px"}}>
             {report.updatesArray?.length > 0 ? (
                 <Box>
                 <Typography variant="h5" mt={4}>
@@ -142,6 +135,13 @@ const Main = () => {
               </div>
             )}
           </Collapse>
+          <Button variant="outlined" onClick={handleToggleUpdates} style={{marginLeft:"123px",marginTop:"23px"}}>
+            {showUpdates ? 'Hide Updates' : 'Show Updates'}
+          </Button>
+
+          <Button variant='outlined' onClick={goBack} style={{marginLeft:"123px",marginTop:"23px"}}>
+             Back
+          </Button>
         </div>
       ) : (
         <Typography variant="body1">Fetching report...</Typography>

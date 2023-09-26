@@ -96,7 +96,6 @@ const Main = () => {
       if (response.status == 200) {
         console.log("Report updated successfully");
         toast.success("Report updated successfully");
-        // You may want to update the reports state or reload the data here
       } else {
         setError("Failed to update report");
       }
@@ -112,134 +111,6 @@ const Main = () => {
   };
 
   return (
-    // <Box  p={2}>
-    //   {loading ? (
-    //     <Typography variant="h5">Loading...</Typography>
-    //   ) : error ? (
-    //     <Typography variant="h5" color="error">
-    //       {error}
-    //     </Typography>
-    //   ) : (
-    //     <div>
-    //       <Typography variant="h4" gutterBottom>
-    //         All Reports
-    //       </Typography>
-    //       <ul>
-    //         {reports.map((report) => (
-    //           <Card
-    //             key={report.id}
-    //             variant="outlined"
-    //             style={{ marginBottom: "10px" }}
-    //           >
-    //             <CardContent>
-    //               <Typography variant="h6">
-    //                 Reporter: {report?.reporter?.name}
-    //               </Typography>
-    //               <Typography>Landmark: {report.landmark}</Typography>
-    //               <Typography>Animal: {report.animalName}</Typography>
-    //               <Typography>Condition: {report.condition}</Typography>
-    //               <Typography>Status: {report.status}</Typography>
-    //               <Typography variant="h6">Last Update:</Typography>
-    //               {report?.updatesArray?.length !== 0 ? (
-    //                 <div>
-    //                   <ul className="updates-list">
-    //                     {/* Get the last update from the updatesArray */}
-    //                     <li>
-    //                       <Typography variant="body1">
-    //                         Remark:{" "}
-    //                         {report.updatesArray[report.updatesArray.length - 1]
-    //                           .remark || "No remark available"}
-    //                       </Typography>
-    //                       <Typography variant="body1">
-    //                         Time:{" "}
-    //                         {formatDate(
-    //                           report.updatesArray[
-    //                             report.updatesArray.length - 1
-    //                           ].updateTime
-    //                         )}
-    //                       </Typography>
-    //                       <Typography variant="body1">
-    //                         Status:{" "}
-    //                         {
-    //                           report.updatesArray[
-    //                             report.updatesArray.length - 1
-    //                           ].status
-    //                         }
-    //                       </Typography>
-    //                     </li>
-    //                   </ul>
-    //                 </div>
-    //               ) : (
-    //                 <div>No updates available</div>
-    //               )}
-    //               <Button
-    //                 variant="contained"
-    //                 onClick={() => openModal(report)}
-    //                 style={{ marginTop: "10px" }}
-    //               >
-    //                 Update
-    //               </Button>
-    //               <Button
-    //                 component={Link}
-    //                 to={`/report/${report._id}`}
-    //                 variant="contained"
-    //                 color="primary"
-    //                 style={{ marginLeft: "10px", marginTop: "10px" }}
-    //               >
-    //                 More
-    //               </Button>
-    //             </CardContent>
-    //           </Card>
-    //         ))}
-    //       </ul>
-    //     </div>
-    //   )}
-
-    //   {isModalOpen && (
-    //     <div className="modal-overlay">
-    //       <div className="modal">
-    //         <span className="close" onClick={closeModal}>
-    //           &times;
-    //         </span>
-    //         <Typography variant="h3">Update Report</Typography>
-    //         <label style={{color:"black"}}>Status:</label>
-    //         <select
-    //           value={updateStatus}
-    //           onChange={handleStatusChange}
-    //           style={{ marginBottom: "10px" }}
-    //         >
-    //           <option value="Unresolved">Unresolved</option>
-    //           <option value="Picked up">Picked up</option>
-    //           <option value="Admitted">Admitted</option>
-    //           <option value="Police case registered">
-    //             Police case registered
-    //           </option>
-    //           <option value="Released">Released</option>
-    //           <option value="Closed">Closed</option>
-    //         </select>
-    //         <br />
-    //         <label style={{color:"black"}}>Remark:</label>
-    //         <textarea
-    //           value={updateRemark}
-    //           onChange={handleRemarkChange}
-    //           rows="4"
-    //           cols="50"
-    //           style={{ marginBottom: "10px" }}
-    //         ></textarea>
-    //         <br />
-    //         <Button
-    //           variant="contained"
-    //           color="primary"
-    //           onClick={handleUpdate}
-    //           style={{ marginBottom: "10px" }}
-    //         >
-    //           Submit
-    //         </Button>
-    //       </div>
-    //     </div>
-    //   )}
-    //    <ToastContainer />
-    // </Box>
     <Box p={2}>
     {loading ? (
       <Typography variant="h5" color="white">Loading...</Typography>
@@ -300,7 +171,6 @@ const Main = () => {
             {report?.updatesArray?.length !== 0 ? (
               <div>
                 <ul className="updates-list">
-                  {/* Get the last update from the updatesArray */}
                   <li>
                     <Typography variant="body1" style={{ color: "#fff" ,marginLeft: "10px" }}>
                       Remark:{" "}
@@ -394,9 +264,7 @@ const Main = () => {
     </div>
   </div>
 )}
-
-
-      </div>
+ </div>
     )}
     <ToastContainer />
   </Box>

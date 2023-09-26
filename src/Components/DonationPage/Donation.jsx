@@ -65,7 +65,7 @@ function Donation() {
         const options = {
           key: "rzp_test_XphPOSB4djGspx", 
           key_secret: "CCrxVo3coD3SKNM3a0Bbh2my",
-          amount:  props  ? props*100 : 1 * 1000 , // Amount in paisa (e.g., 1000 paisa = ₹10)
+          amount:  props  ? props*100 : 1 * 1000 , 
           currency: "INR",
           name: "Animal Rescue Hub",
           description: "Payment for Product",
@@ -115,12 +115,6 @@ function Donation() {
          <Typography style={{color:"white", fontWeight:"bold", fontSize:"40px", fontFamily:"inherit"}}>Help us</Typography>
          <Typography style={{color:"white", fontWeight:"bold",  fontSize:"40px" ,fontFamily:"inherit"}}>Help them.</Typography>
         <Box style={{marginTop:"10px" , width:"45%",marginBottom:"24px" }}>
-        {/* <LinearProgress
-      sx={{ borderRadius: '5px' }} 
-      style={linearProgressStyles}
-    >
-      <div style={barStyles} />
-    </LinearProgress>        */}
     <LinearProgress variant="determinate" value={progress} style={{width:"340px", height:"20px"}} />
           <Box
   style={{
@@ -135,7 +129,7 @@ function Donation() {
       color: "white",
       fontWeight: "bold",
       fontFamily: "inherit",
-      flex: "1", // Add this line to make it flexible and push to the left
+      flex: "1", 
     }}
   >
     ₹ {displayPay} donated
@@ -145,8 +139,8 @@ function Donation() {
       color: "white",
       fontWeight: "bold",
       fontFamily: "inherit",
-      flex: "1", // Add this line to make it flexible and push to the right
-      textAlign: "right", // Align the text to the right within the flex item
+      flex: "1", 
+      textAlign: "right", 
     }}
   >
     ₹ 5000 goal
