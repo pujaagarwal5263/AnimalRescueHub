@@ -74,9 +74,10 @@ const cloudinaryConfig = {
       const data = await response.json();
       const imageUrlsfromCloud = data.secure_url;
       imageArray.push(imageUrlsfromCloud)
+      console.log(imageArray);
      setTimeout(()=>{
       setImageUrls(imageArray)
-     },4000)
+     },1000)
     }
   }
   setLoading(false)

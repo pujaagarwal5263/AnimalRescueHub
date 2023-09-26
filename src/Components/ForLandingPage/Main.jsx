@@ -8,6 +8,7 @@ import Logo from "../../assets/logo-png-colored.png";
 import Button from "@mui/material/Button";
 import { BsArrowDown } from "react-icons/bs";
 import "./Main.css";
+import { Link } from "react-router-dom";
 
 function Main() {
   const [checked, setChecked] = useState(true);
@@ -182,7 +183,7 @@ function Main() {
             className="mlp-content"
             style={{
               width: "80%",
-              margin: "30px auto",
+              margin: "30px auto 0",
               textAlign: "center",
               fontSize: "25px",
               lineHeight: "1.4em",
@@ -199,24 +200,43 @@ function Main() {
 
           <div
             className="mlp-btns"
-            style={{ margin: "20px 0px 40px", display: "flex" }}
+            style={{ margin: "20px 0px", display: "flex", flexDirection:"column" }}
           >
             <Button
-              variant="outlined"
+              variant="contained"
               onClick={handleOpen}
               sx={{
-                margin: "0 10px",
+                margin: "20px 10px",
                 width: "100%",
                 fontSize: "20px",
                 border: "2px solid #0A87BA",
                 borderRadius: "50px",
-                color: "#0A87BA",
+                backgroundColor: "#0A87BA",
+                color:"#fff",
                 ":focus": { border: "2px solid #0A87BA" },
                 fontWeight: "500",
               }}
             >
               Join for Saving Paws
             </Button>
+            <Link to='/check-report-status'>
+              <Button
+                variant="outlined"
+                onClick={handleOpen}
+                sx={{
+                  margin: "0 10px",
+                  width: "100%",
+                  fontSize: "20px",
+                  border: "2px solid #0A87BA",
+                  borderRadius: "50px",
+                  color: "#0A87BA",
+                  ":focus": { border: "2px solid #0A87BA" },
+                  fontWeight: "500",
+                }}
+              >
+                Check Report Status
+              </Button>
+            </Link>
           </div>
 
           <Button

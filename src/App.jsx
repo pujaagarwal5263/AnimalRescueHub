@@ -12,6 +12,7 @@ import AdminLogin from './Pages/AdminLogin';
 import AdminDashboard from './Pages/AdminDashboard';
 import Donation from './Components/DonationPage/Donation';
 import GetReportById from './Pages/GetReportById';
+import CheckReportStatus from './Pages/CheckReportStatus';
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
         <Route path='/home' element={<Home />} />
         <Route path='/report' element={<AnimalReport/>}/>
         <Route path='/myreports' element={<MyReports />}/>
+        <Route path='/check-report-status' element={<CheckReportStatus />} />
         <Route path='/check-report/:reportId' element={<GetReportById />} />
         <Route path='/allreports' element={<AllReports />}/>
         <Route path='/track' element={<Track/>}/>

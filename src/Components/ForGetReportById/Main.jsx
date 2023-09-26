@@ -3,7 +3,6 @@ import axios from "axios"
 import { Box,Zoom,CircularProgress } from "@mui/material"
 import { useEffect, useState } from "react"
 import bgImg from '../../assets/secondSection.jpg';
-import Slider from 'react-slick';
 
 
 function Main() {
