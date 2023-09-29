@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Box,Button,CircularProgress, Zoom } from "@mui/material";
+import { Box,Button,CircularProgress, Zoom, Modal } from "@mui/material";
 import bgImg from '../../assets/secondSection.jpg';
 import { Link } from "react-router-dom";
+import {IoIosCloseCircleOutline} from 'react-icons/io';
 
 
 const Main = () => {
@@ -23,6 +24,24 @@ const Main = () => {
   const [editedBreed, setEditedBreed] = useState("");
   const [editedCondtion, setEditedCondtion] = useState("");
   const [checked, setChecked] = useState(true);
+
+  const handleOpen = (index, report) => {
+    setSelectedFeatureIndex(index); 
+    setSelectedReport(report);
+
+    // Initialize the edited values with the current report data
+    setEditedLocationURL(report.locationURL);
+    setEditedLandmark(report.landmark);
+    setEditedAnimalName(report.animalName);
+    setEditedBreed(report.breed);
+    setEditedCondtion(report.condition);
+    setOpen(true); 
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setSelectedFeatureIndex(null); 
+  };
 
 
   const fetchReports = async () => {
@@ -86,23 +105,6 @@ const Main = () => {
   console.log(imageUrls);
 };
 
-  const handleEditClick = (report) => {
-    setSelectedReport(report);
-
-    // Initialize the edited values with the current report data
-    setEditedLocationURL(report.locationURL);
-    setEditedLandmark(report.landmark);
-    setEditedAnimalName(report.animalName);
-    setEditedBreed(report.breed);
-    setEditedCondtion(report.condition);
-
-    setShowModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-    setSelectedReport(null);
-  };
 
   // Function to handle form submission
   const handleFormSubmit = async (e) => {
@@ -135,7 +137,7 @@ const Main = () => {
       console.log(response.data);
 
       // Close the modal and refresh the reports data
-      handleCloseModal();
+      handleClose();
       fetchReports();
     } catch (error) {
       console.error("Error updating report:", error);
@@ -178,100 +180,6 @@ const Main = () => {
   }
 
   return (
-    // <div style={{ backgroundColor: "red" }}>
-    //   {loading ? (
-    //     <p>Loading...</p>
-    //   ) : error ? (
-    //     <p>{error}</p>
-    //   ) : (
-    //     <div>
-    //       <h2>My Reports</h2>
-    //       <ul>
-    //         {reports.map((report) => (
-    //           <li key={report._id}>
-    //             <p>Location URL: {report.locationURL}</p>
-    //             <p>Landmark: {report.landmark}</p>
-    //             <p>Animal: {report.animalName}</p>
-    //             <p>Breed: {report.breed}</p>
-    //             <p>Condition: {report.condition}</p>
-    //             <p>Status: {report.status}</p>
-    //             <button onClick={() => handleEditClick(report)}>Edit</button>
-    //             <button onClick={() => confirmDelete(report._id)}>Delete</button>
-    //           </li>
-    //         ))}
-    //       </ul>
-    //     </div>
-    //   )}
-    //   {showModal && selectedReport && (
-    //     <div className="modal">
-    //       <div className="modal-content">
-    //         <span className="close" onClick={handleCloseModal}>
-    //           &times;
-    //         </span>
-    //         <form onSubmit={handleFormSubmit}>
-    //           <p>Edit Report:</p>
-    //           <label>
-    //             Location URL:
-    //             <input
-    //               type="text"
-    //               value={editedLocationURL}
-    //               onChange={(e) => setEditedLocationURL(e.target.value)}
-    //             />
-    //           </label>
-    //           <label>
-    //             Landmark:
-    //             <input
-    //               type="text"
-    //               value={editedLandmark}
-    //               onChange={(e) => setEditedLandmark(e.target.value)}
-    //             />
-    //           </label>
-    //           <label>
-    //             Animal name:
-    //             <input
-    //               type="text"
-    //               value={editedAnimalName}
-    //               onChange={(e) => setEditedAnimalName(e.target.value)}
-    //             />
-    //           </label>
-    //           <label>
-    //             Breed
-    //             <input
-    //               type="text"
-    //               value={editedBreed}
-    //               onChange={(e) => setEditedBreed(e.target.value)}
-    //             />
-    //           </label>
-    //           <label>
-    //             Condition
-    //             <select
-    //               value={editedCondtion}
-    //               onChange={(e) => setEditedCondtion(e.target.value)}
-    //             >
-    //               <option value="severe">Severe</option>
-    //               <option value="unstable">Unstable</option>
-    //               <option value="stable">Stable</option>
-    //               <option value="normal">Normal</option>
-    //               <option value="minor-issues">Minor Issues</option>
-    //             </select>
-    //           </label>
-             
-    //       <label htmlFor="imageUrls">Add more Images:</label>
-    //       <input
-    //         type="file"
-    //         id="imageUrls"
-    //         name="imageUrls"
-    //         multiple
-    //         onChange={handleImageUpload}
-    //       />
-    //     <p>{imageUpload? "Uploading": "Upload images here"}</p>
-     
-    //           <button type="submit">Save</button>
-    //         </form>
-    //       </div>
-    //     </div>
-    //   )}
-    // </div>
     <Box sx={{
       minHeight:"100vh", 
       width:"100%",
@@ -315,12 +223,161 @@ const Main = () => {
 
                 <Box className="info-btns" sx={{marginTop:"10px", display:"flex", justifyContent:"space-evenly", alignItems:"center"}}>
                   <Link to={`/check-report/${report._id}`}><Button variant="contained" sx={{backgroundColor:"#0A87BA"}}>Check</Button></Link>
-                  {/* <Button variant="contained" sx={{backgroundColor:"#0A87BA"}}>Edit</Button> */}
+                  <Button variant="contained" sx={{backgroundColor:"#0A87BA"}} onClick={() => handleOpen(index,report)}>Edit</Button>
                   <Button variant="contained" onClick={() => confirmDelete(report._id)} sx={{backgroundColor:"#0A87BA"}}>Delete</Button>
                 </Box>
+                <Modal 
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                sx={{ p: "20px", overflow:"auto" }}
+              >
+                <Box sx={{margin:"20px",backgroundColor:"rgba(255,255,255,0.3)", borderRadius:"10px"}}>
+                  <Box sx={{padding:"20px", color:"#fff"}}>
+                    <IoIosCloseCircleOutline style={{fontSize:"50px"}} onClick={handleClose}/>
+                    <h1 style={{textAlign:"center", textDecoration:"underline"}}>Edit Report:</h1>
+                  </Box>
+
+                  <form onSubmit={handleFormSubmit} style={{padding:"0 40px"}}>
+                  <div className='animal-form-div'>
+                    <label style={{fontSize:"20px", margin:"30px 0 0"}} htmlFor="locationURL">Location URL:</label>
+                    <input  
+                      type="url"
+                      id="locationURL"
+                      name="locationURL"
+                      value={editedLocationURL}
+                      onChange={(e) => setEditedLocationURL(e.target.value)}
+                      // value={formData.locationURL}
+                      // onChange={handleChange}
+                      style={{
+                        width:"100%",
+                        height:"30px",
+                        padding:"0 10px",
+                        backgroundColor:"transparent",
+                        border:"2px solid #fff",
+                        color:"#fff",
+                        margin:"5px 0",
+                      }}
+                    />      
+                  </div>
+                  <div>
+                    <label style={{fontSize:"20px", margin:"30px 0 0"}} htmlFor="landmark">Landmark:</label>
+                    <input
+                      type="text"
+                      id="landmark"
+                      name="landmark"
+                      value={editedLandmark}
+                      onChange={(e) => setEditedLandmark(e.target.value)}
+                      // value={formData.landmark}
+                      // onChange={handleChange}
+                      style={{
+                        width:"100%",
+                        height:"30px",
+                        padding:"0 10px",
+                        backgroundColor:"transparent",
+                        border:"2px solid #fff",
+                        color:"#fff",
+                        margin:"5px 0",
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{fontSize:"20px", margin:"30px 0 0"}} htmlFor="animalName">Animal Type:</label>
+                    <input
+                      type="text"
+                      id="animalName"
+                      name="animalName"
+                      value={editedAnimalName}
+                      onChange={(e) => setEditedAnimalName(e.target.value)}
+                      // value={formData.animalName}
+                      // onChange={handleChange}
+                      style={{
+                        width:"100%",
+                        height:"30px",
+                        padding:"0 10px",
+                        backgroundColor:"transparent",
+                        border:"2px solid #fff",
+                        color:"#fff",
+                        margin:"5px 0"
+                      }}
+                      placeholder='Dog/Cat etc'
+                    />
+                  </div>
+                  <div>
+                    <label style={{fontSize:"20px", margin:"30px 0 0"}} htmlFor="breed">Breed:</label>
+                    <input
+                      type="text"
+                      id="breed"
+                      name="breed"
+                      value={editedBreed}
+                          onChange={(e) => setEditedBreed(e.target.value)}
+                      // value={formData.breed}
+                      // onChange={handleChange}
+                      style={{
+                        width:"100%",
+                        height:"30px",
+                        padding:"0 10px",
+                        backgroundColor:"transparent",
+                        border:"2px solid #fff",
+                        color:"#fff",
+                        margin:"5px 0",
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{fontSize:"20px", margin:"30px 0 0"}} htmlFor="condition">Condition:</label>
+                    <div style={{display:"flex", alignItems:"center", justifyItems:"center"}}>
+                      <select
+                        id="condition"
+                        name="condition"
+                        value={editedCondtion}
+                        onChange={(e) => setEditedCondtion(e.target.value)}
+                        // value={formData.condition}
+                        // onChange={handleConditionChange}
+                        style={{width:"200px", padding:"8px", border:"none", borderRadius:"5px", margin:"8px auto 0"}}
+                      >
+                        <option value="severe">Severe</option>
+                        <option value="unstable">Unstable</option>
+                        <option value="stable">Stable</option>
+                        <option value="normal">Normal</option>
+                        <option value="minor-issues">Minor Issues</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div>
+                    <label style={{fontSize:"20px", margin:"30px 0 0"}} htmlFor="imageUrls">Upload Images:</label>
+                    <input
+                      type="file"
+                      id="imageUrls"
+                      name="imageUrls"
+                      multiple
+                      onChange={handleImageUpload}
+                      style={{
+                        width:"100%",
+                        height:"30px",
+                        backgroundColor:"transparent",
+                        border:"2px solid #fff",
+                        color:"#fff",
+                        margin:"15px 0",
+                      }}
+                    />
+                  <p style={{textAlign:"center", color:"#fff", fontWeight:"600" }}>{imageUpload? "Uploading": "Upload images here"}</p>
+                  </div>
+                  <Button variant='contained' style={{backgroundColor:"#0A87BA",width:"100%", margin:"20px 0", padding:"10px 0", borderRadius:"10px", fontSize:"20px", fontWeight:"500"}} disabled={loading ? true : false} type="submit">Submit</Button>
+                  {/* disabled={loading ? true : false} */}
+                  {/* {loading ? <CircularProgress /> : 'Submit'} */}
+                </form>
+
+                </Box>
+              
+
+              </Modal>
 
               </Box>
               </Zoom>
+
+              
 
             ))}          
 
@@ -329,6 +386,7 @@ const Main = () => {
 
 
       </Box>
+
 
     </Box>
   );
