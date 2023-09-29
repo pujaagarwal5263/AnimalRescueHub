@@ -105,22 +105,6 @@ const Main = () => {
   console.log(imageUrls);
 };
 
-  // const handleEditClick = (report) => {
-  //   setSelectedReport(report);
-
-  //   setEditedLocationURL(report.locationURL);
-  //   setEditedLandmark(report.landmark);
-  //   setEditedAnimalName(report.animalName);
-  //   setEditedBreed(report.breed);
-  //   setEditedCondtion(report.condition);
-
-  //   setShowModal(true);
-  // };
-
-  // const handleCloseModal = () => {
-  //   setShowModal(false);
-  //   setSelectedReport(null);
-  // };
 
   // Function to handle form submission
   const handleFormSubmit = async (e) => {
@@ -196,31 +180,6 @@ const Main = () => {
   }
 
   return (
-    // <div style={{ backgroundColor: "red" }}>
-    //   {loading ? (
-    //     <p>Loading...</p>
-    //   ) : error ? (
-    //     <p>{error}</p>
-    //   ) : (
-    //     <div>
-    //       <h2>My Reports</h2>
-    //       <ul>
-    //         {reports.map((report) => (
-    //           <li key={report._id}>
-    //             <p>Location URL: {report.locationURL}</p>
-    //             <p>Landmark: {report.landmark}</p>
-    //             <p>Animal: {report.animalName}</p>
-    //             <p>Breed: {report.breed}</p>
-    //             <p>Condition: {report.condition}</p>
-    //             <p>Status: {report.status}</p>
-    //             <button onClick={() => handleEditClick(report)}>Edit</button>
-    //             <button onClick={() => confirmDelete(report._id)}>Delete</button>
-    //           </li>
-    //         ))}
-    //       </ul>
-    //     </div>
-    //   )}
-    // </div>
     <Box sx={{
       minHeight:"100vh", 
       width:"100%",
@@ -427,77 +386,6 @@ const Main = () => {
 
 
       </Box>
-
-      {/* {showModal && selectedReport && (
-        <div className="modal">
-          <div className="modal-content">
-            <span className="close" onClick={handleCloseModal}>
-              &times;
-            </span>
-            <form onSubmit={handleFormSubmit}>
-              <p>Edit Report:</p>
-              <label>
-                Location URL:
-                <input
-                  type="text"
-                  value={editedLocationURL}
-                  onChange={(e) => setEditedLocationURL(e.target.value)}
-                />
-              </label>
-              <label>
-                Landmark:
-                <input
-                  type="text"
-                  value={editedLandmark}
-                  onChange={(e) => setEditedLandmark(e.target.value)}
-                />
-              </label>
-              <label>
-                Animal name:
-                <input
-                  type="text"
-                  value={editedAnimalName}
-                  onChange={(e) => setEditedAnimalName(e.target.value)}
-                />
-              </label>
-              <label>
-                Breed
-                <input
-                  type="text"
-                  value={editedBreed}
-                  onChange={(e) => setEditedBreed(e.target.value)}
-                />
-              </label>
-              <label>
-                Condition
-                <select
-                  value={editedCondtion}
-                  onChange={(e) => setEditedCondtion(e.target.value)}
-                >
-                  <option value="severe">Severe</option>
-                  <option value="unstable">Unstable</option>
-                  <option value="stable">Stable</option>
-                  <option value="normal">Normal</option>
-                  <option value="minor-issues">Minor Issues</option>
-                </select>
-              </label>
-             
-          <label htmlFor="imageUrls">Add more Images:</label>
-          <input
-            type="file"
-            id="imageUrls"
-            name="imageUrls"
-            multiple
-            onChange={handleImageUpload}
-          />
-        <p>{imageUpload? "Uploading": "Upload images here"}</p>
-     
-              <button type="submit">Save</button>
-            </form>
-          </div>
-        </div>
-      )} */}
-
 
 
     </Box>
