@@ -187,16 +187,16 @@ function Main() {
           <img
             src={Logo}
             alt="Logo"
-            style={{ width: "320px", height: "50px", marginTop: "40px" }}
+            style={{ width: "320px", height: "50px", marginTop: "10px" }}
           />
 
           <div
             className="mlp-content"
             style={{
               width: "80%",
-              margin: "30px auto 0",
+              margin: "15px auto 0",
               textAlign: "center",
-              fontSize: "25px",
+              fontSize: "20px",
               lineHeight: "1.4em",
             }}
           >
@@ -204,20 +204,20 @@ function Main() {
               Animal Rescue Hub: Uniting hearts for animal welfare, where every
               act of kindness matters
             </p>
-            <p style={{ marginTop: "25px" }}>
+            <p style={{ marginTop: "20px" }}>
               Rescuing lives, one paw at a time, with compassion.
             </p>
           </div>
 
           <div
             className="mlp-btns"
-            style={{ margin: "20px 0px", display: "flex", flexDirection:"column" }}
+            style={{ margin: "10px 0px", display: "flex", flexDirection:"column" }}
           >
             <Button
               variant="contained"
               onClick={handleOpen}
               sx={{
-                margin: "20px 10px",
+                margin: "0px 10px 20px",
                 width: "100%",
                 fontSize: "20px",
                 border: "2px solid #0A87BA",
@@ -257,7 +257,7 @@ function Main() {
               backgroundColor: "#0A87BA",
               borderRadius: "50%",
               color: "#fff",
-              marginTop: "10px",
+              marginTop: "5px",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
