@@ -9,6 +9,8 @@ import Button from "@mui/material/Button";
 import { BsArrowDown } from "react-icons/bs";
 import "./Main.css";
 import { Link } from "react-router-dom";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Main() {
   const [checked, setChecked] = useState(true);
@@ -81,7 +83,7 @@ function Main() {
       city: signupData.city,
     };
     try {
-      const response = await fetch(`http://localhost:8000/signup`, {
+      const response = await fetch(`https://animal-rescue-hub.onrender.com/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -98,11 +100,16 @@ function Main() {
           password: "",
           city: "",
         })
+        toast.success("Signed up Successfully!")
+        toast.success("Now login to continue.")
+        localStorage.removeItem('adminToken');
       } else {
+        toast.error(data.message);
         console.error(data.message);
       }
     } catch (error) {
       console.error('Error:', error);
+      toast.error(error.response.data.message);
     }
   };
 
@@ -114,7 +121,7 @@ function Main() {
         password: loginData.loginPassword
       }
       try {
-        const response = await fetch(`http://localhost:8000/login`, {
+        const response = await fetch(`https://animal-rescue-hub.onrender.com/login`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -132,6 +139,7 @@ function Main() {
             localStorage.setItem("userEmail", email);
             localStorage.setItem("userID", userID);
             localStorage.setItem("userName", name);
+            localStorage.removeItem('adminToken');
 
           setLoginData({
             loginEmail: "",
@@ -141,13 +149,16 @@ function Main() {
         } else {
           console.log(data.message);
           console.error('Login failed');
+          toast.error(data.message)
         }
       } catch (error) {
         console.error('Error:', error);
+        toast.error(error);
       } 
       // console.log("Login data:", loginData);
     } catch (error) {
       console.error("Error:", error);
+      toast.error(error);
     }
   };
 
@@ -382,7 +393,18 @@ function Main() {
           </Box>
         </Modal>
 
-
+        <ToastContainer
+            position="bottom-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="colored"
+        />
 
       </Box>
     </Slide>
