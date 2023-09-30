@@ -25,7 +25,7 @@ const Main = () => {
 
   const fetchReport = async () => {
     try {
-      const token = localStorage.getItem('adminToken');
+      const token = localStorage.getItem('token');
       const response = await axios.get(`https://animal-rescue-hub.onrender.com/get-report-by-id/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,

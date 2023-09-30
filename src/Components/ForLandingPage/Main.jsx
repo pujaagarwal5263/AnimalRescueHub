@@ -120,6 +120,7 @@ function Main() {
         email: loginData.loginEmail,
         password: loginData.loginPassword
       }
+      console.log(userData);
       try {
         const response = await fetch(`https://animal-rescue-hub.onrender.com/login`, {
           method: 'POST',
@@ -129,6 +130,7 @@ function Main() {
           body: JSON.stringify(userData),
         });
         const data = await response.json();
+        console.log(response.ok);
   
         if (response.ok) {
           const { token, email, userID, name } = data;
@@ -139,12 +141,13 @@ function Main() {
             localStorage.setItem("userEmail", email);
             localStorage.setItem("userID", userID);
             localStorage.setItem("userName", name);
-            localStorage.removeItem('adminToken');
 
           setLoginData({
             loginEmail: "",
             loginPassword: "",
           })
+
+         // toast.success(data.message)
           navigate("/home")
         } else {
           console.log(data.message);
@@ -388,7 +391,7 @@ function Main() {
                   value={loginData.loginPassword}
                   onChange={handleLoginChange}
                 />
-                <button className="l-btn">Login</button>
+                <button type="submit" className="l-btn">Login</button>
               </form>
             </div>
           </Box>

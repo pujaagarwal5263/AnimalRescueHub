@@ -27,7 +27,7 @@ const Main = () => {
     try {
       const response = await axios.get("https://animal-rescue-hub.onrender.com/get-all-reports");
 
-      if (response.status === 200) {
+      if (response.status == 200) {
         console.log(response.data);
         setReports(response.data);
       } else {
