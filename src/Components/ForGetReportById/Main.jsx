@@ -19,7 +19,7 @@ function Main() {
         const authToken = localStorage.getItem("token");
         try {
             setLoading(true)
-            const response = await axios.get(`http://localhost:8000/get-report-by-id/${reportId}`, {
+            const response = await axios.get(`https://animal-rescue-hub.onrender.com/get-report-by-id/${reportId}`, {
             headers: {
               Authorization: `Bearer ${authToken}`
             },

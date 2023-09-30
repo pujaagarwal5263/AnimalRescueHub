@@ -22,10 +22,11 @@ const Main = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:8000/admin-login', {
+      const response = await fetch('https://animal-rescue-hub.onrender.com/admin-login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+
         },
         body: JSON.stringify(requestBody),
       });
@@ -34,6 +35,7 @@ const Main = () => {
 
       if (response.ok) {
         toast.success('Login successful');
+        localStorage.removeItem('token');
         localStorage.setItem('adminToken', data.token);
         navigate("/admindashboard")
       } else {

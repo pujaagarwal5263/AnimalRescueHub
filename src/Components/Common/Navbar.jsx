@@ -11,7 +11,7 @@ function Navbar() {
   const navigate =useNavigate();
     const [isDesktop, setIsDesktop] = useState(false);
     const [openDrawer,setOpenDrawer] = useState(false);
-    const [userName, setUserName] = useState('');
+    const [userName, setUserName] = useState(null);
 
     const handleOpenDrawer = () => setOpenDrawer(true);
     const handleCloseDrawer = () => setOpenDrawer(false);
@@ -37,6 +37,9 @@ function Navbar() {
         localStorage.clear();
         navigate('/');
       }
+      const guestUser = () => {
+        navigate('/');
+      }
 
 
   return (
@@ -52,9 +55,9 @@ function Navbar() {
             MenuListProps={{
                 'aria-labelledby': 'user',
         }}>
-            <MenuItem>{userName!="" ? userName : "Please login"}</MenuItem>
+            <MenuItem><Link to='/' style={{textDecoration:'none', color:"black"}}>{userName ? userName : "Please login"}</Link></MenuItem>
             <MenuItem><Link to='/home' style={{textDecoration:'none', color:"black"}}>Home</Link></MenuItem>
-            <MenuItem onClick={clearStorage}>Logout</MenuItem>
+            <MenuItem onClick={userName ? clearStorage : guestUser}>{userName ? 'Log out' : 'Log In'}</MenuItem>
         </Menu>
 
 
@@ -73,11 +76,9 @@ function Navbar() {
                 
                 <Link to="/emergency" style={{color:"#fff", fontSize:"22px", fontWeight:"500", margin:"20px 0"}}>Emergency Services</Link>
 
-                {/* <Link to="/home" style={{color:"#fff", fontSize:"22px", fontWeight:"500", margin:"20px 0"}}>About Us</Link>
+                <Link style={{color:"#fff", fontSize:"22px", fontWeight:"500", margin:"20px 0"}} to='/donation'>Donate Us</Link>
 
-                <Link to="/home" style={{color:"#fff", fontSize:"22px", fontWeight:"500", margin:"20px 0"}}>Contact Us</Link> */}
-
-                <Button style={{color:"#0A87BA", backgroundColor:"#fff", padding:"10px 20px", margin:"20px 0"}}>Log Out</Button>
+                <Button onClick={userName ? clearStorage : guestUser} style={{color:"#0A87BA", backgroundColor:"#fff", padding:"10px 20px", margin:"20px 0"}}>{userName ? 'Log out' : 'Log In'}</Button>
 
             </Box>
         </Box>

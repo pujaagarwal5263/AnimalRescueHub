@@ -22,7 +22,7 @@ const Main = () => {
       console.log("Valid MongoDB ObjectID");
       try {
         const authToken = localStorage.getItem('token');
-        const response = await axios.get(`http://localhost:8000/track/${reportId}`, {
+        const response = await axios.get(`https://animal-rescue-hub.onrender.com/track/${reportId}`, {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
