@@ -3,6 +3,7 @@ import { Box, Button, Zoom, Modal } from '@mui/material';
 import bgImg from '../../assets/secondSection.jpg';
 import featureData from '../../assets/featuresData';
 import featureDescriptions from '../../assets/featureDescriptions';
+import { Link } from 'react-router-dom';
 
 function SecondSection() {
   const [isDesktop, setIsDesktop] = useState(false);
@@ -49,6 +50,8 @@ function SecondSection() {
             </Box>
           </Zoom>
         ))}
+
+        <Box sx={{display:"flex", justifyContent:"center"}}><Link to='/donation' ><Button variant='contained' sx={{backgroundColor:"#0A87BA"}}>Donate Us</Button></Link></Box>
       </Box>
 
       <Modal
