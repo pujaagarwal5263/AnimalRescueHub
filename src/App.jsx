@@ -13,6 +13,7 @@ import AdminDashboard from './Pages/AdminDashboard';
 import Donation from './Components/DonationPage/Donation';
 import GetReportById from './Pages/GetReportById';
 import CheckReportStatus from './Pages/CheckReportStatus';
+import ReportDetails from './Pages/ReportDetails';
 
 function App() {
 
@@ -51,6 +52,7 @@ function App() {
         <Route path='/adminlogin' element={adminToken ? <Navigate to='/admindashboard' /> : <AdminLogin />}/>
         <Route path='/admindashboard' element={adminToken ? <AdminDashboard/> : <Navigate to='/adminlogin' />}/>
         <Route path='/donation' element={<Donation/>}/>
+        <Route path='/report/:id' element={<ReportDetails/>}/>
       </Routes>
     </div>
    </BrowserRouter>
