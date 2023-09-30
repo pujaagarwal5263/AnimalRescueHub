@@ -37,7 +37,7 @@ const Main = () => {
         toast.success('Login successful');
         localStorage.removeItem('token');
         localStorage.setItem('adminToken', data.token);
-        navigate("/admindashboard")
+        navigate("/admindashboard");
       } else {
         toast.error(data.message);
       }

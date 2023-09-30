@@ -55,7 +55,7 @@ function Navbar() {
             MenuListProps={{
                 'aria-labelledby': 'user',
         }}>
-            <MenuItem><Link to='/' style={{textDecoration:'none', color:"black"}}>{userName ? userName : "Please login"}</Link></MenuItem>
+            <MenuItem><Link to={userName ? '' : '/'} style={{textDecoration:'none', color:"black"}}>{userName ? userName : "Please login"}</Link></MenuItem>
             <MenuItem><Link to='/home' style={{textDecoration:'none', color:"black"}}>Home</Link></MenuItem>
             <MenuItem onClick={userName ? clearStorage : guestUser}>{userName ? 'Log out' : 'Log In'}</MenuItem>
         </Menu>
