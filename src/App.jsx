@@ -1,5 +1,5 @@
 import './App.css'
-import { BrowserRouter, Routes, Route} from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 import LandingPage from './Pages/LandingPage';
 import Home from './Pages/Home';
 import AnimalReport from './Pages/AnimalReport';
@@ -26,17 +26,17 @@ function App() {
     <div className="pages">
       <Routes>
         <Route path='/' element={<LandingPage />} />
-        <Route path='/home' element={<Home />} />
-        <Route path='/report' element={<AnimalReport/>}/>
-        <Route path='/myreports' element={<MyReports />}/>
+        <Route path='/home' element={authToken ? <Home /> : <Navigate to='/' />} />
+        <Route path='/report' element={authToken ? <AnimalReport/> : <Navigate to='/' />}/>
+        <Route path='/myreports' element={authToken ? <MyReports /> : <Navigate to='/' />}/>
         <Route path='/check-report-status' element={<CheckReportStatus />} />
-        <Route path='/check-report/:reportId' element={<GetReportById />} />
-        <Route path='/allreports' element={<AllReports />}/>
+        <Route path='/check-report/:reportId' element={authToken ? <GetReportById /> : <Navigate to='/' />} />
+        {/* <Route path='/allreports' element={<AllReports />}/> */}
         <Route path='/track' element={<Track/>}/>
-        <Route path='/emergency' element={<Emergency/>}/>
-        <Route path='/breed' element={<Breed/>}/>
-        <Route path='/adminlogin' element={<AdminLogin/>}/>
-        <Route path='/admindashboard' element={<AdminDashboard/>}/>
+        <Route path='/emergency' element={authToken ? <Emergency/> : <Navigate to='/' />}/>
+        <Route path='/breed' element={authToken ? <Breed/> : <Navigate to='/' />}/>
+        <Route path='/adminlogin' element={!adminToken ? <AdminLogin/> : <Navigate to='/admindashboard' />}/>
+        <Route path='/admindashboard' element={adminToken ? <AdminDashboard/> : <Navigate to='/adminlogin' />}/>
         <Route path='/donation' element={<Donation/>}/>
       </Routes>
     </div>
