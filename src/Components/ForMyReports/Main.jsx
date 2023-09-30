@@ -48,7 +48,7 @@ const Main = () => {
     try {
       const authToken = localStorage.getItem("token");
       const response = await axios.get(
-        "http://localhost:8000/get-my-reports",
+        "https://animal-rescue-hub.onrender.com/get-my-reports",
         {
           headers: {
             Authorization: `Bearer ${authToken}`,
@@ -125,7 +125,7 @@ const Main = () => {
       // Send a PUT request to update the report data on the server
       const authToken = localStorage.getItem("token");
       const response = await axios.post(
-        `http://localhost:8000/update-my-report`,
+        `https://animal-rescue-hub.onrender.com/update-my-report`,
         userData,
         {
           headers: {
@@ -162,7 +162,7 @@ const Main = () => {
       console.log(userData);
       const authToken = localStorage.getItem("token");
       const response = await axios.post(
-        `http://localhost:8000/delete-report`,
+        `https://animal-rescue-hub.onrender.com/delete-report`,
         userData,
         {
           headers: {
