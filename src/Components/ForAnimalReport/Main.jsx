@@ -155,7 +155,7 @@ useEffect(()=>{
       const authToken = localStorage.getItem("token");
   
       const response = await axios.post(
-        'http://localhost:8000/report-animal',
+        'https://animal-rescue-hub.onrender.com/report-animal',
         requestBody,
         {
           headers: {
