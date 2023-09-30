@@ -68,7 +68,7 @@ function Donation() {
           amount:  props  ? props*100 : 1 * 1000 , 
           currency: "INR",
           name: "Animal Rescue Hub",
-          description: "Payment for Product",
+          description: "Donation for animals",
           handler: function (response) {
             console.log(response);
             alert("payment done");
