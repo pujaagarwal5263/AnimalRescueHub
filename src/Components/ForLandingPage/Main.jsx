@@ -263,6 +263,30 @@ function Main() {
           </Button>
         </div>
 
+
+        {isDesktop && <Box sx={{
+          display:"flex",
+          justifyContent:"center",
+          alignItems:"center",
+          width:"100%",
+          height:"100vh"
+        }}>
+          <Box sx={{
+            backgroundColor:"rgba(255,255,255,0.5)",
+            width:"600px",
+            height:"300px",
+            padding:"30px",
+            borderRadius:"10px"
+          }}>
+            <h1 style={{textAlign:"center"}}>Welcome to Animal Rescue Hub</h1>
+
+            <p style={{margin:'20px 0', fontSize:"18px",fontWeight:"500", textAlign:"justify"}}><b>For Administrators:</b> To access the admin panel, click the 'Admin Login' button.</p>
+            <p style={{margin:'20px 0', fontSize:"18px",fontWeight:"500", textAlign:"justify"}}><b>For Users: </b>Animal Rescue Hub is designed for mobile screens. Please use our web app on your mobile device for the best experience.</p>
+
+            <Link to='/adminlogin'><Button variant="contained">Admin login</Button></Link>
+          </Box>  
+        </Box>}
+
         <Modal
           open={open}
           onClose={handleClose}
@@ -357,6 +381,9 @@ function Main() {
             </div>
           </Box>
         </Modal>
+
+
+
       </Box>
     </Slide>
   );
