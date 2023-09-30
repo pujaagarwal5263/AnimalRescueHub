@@ -94,11 +94,11 @@ const Main = () => {
             )}
           </div>
 <br></br>
-          <Button variant="outlined" onClick={handleToggleUpdates}>
+          <Button variant="outlined" sx={{color:"#fff", borderColor:"#fff"}} onClick={handleToggleUpdates}>
             {showUpdates ? 'Hide Updates' : 'Show Updates'}
           </Button>
 
-          <Button variant='outlined' onClick={goBack}>
+          <Button variant='contained' onClick={goBack} sx={{margin:"0 20px"}}>
              Back
           </Button>
 
