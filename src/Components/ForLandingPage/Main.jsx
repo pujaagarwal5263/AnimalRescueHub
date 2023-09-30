@@ -295,6 +295,7 @@ function Main() {
             <p style={{margin:'20px 0', fontSize:"18px",fontWeight:"500", textAlign:"justify"}}><b>For Users: </b>Animal Rescue Hub is designed for mobile screens. Please use our web app on your mobile device for the best experience.</p>
 
             <Link to='/adminlogin'><Button variant="contained">Admin login</Button></Link>
+            <Link to='/donation'><Button variant="contained"  sx={{margin:'0 20px'}}>Donate US</Button></Link>
           </Box>  
         </Box>}
 
