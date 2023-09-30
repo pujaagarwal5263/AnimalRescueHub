@@ -16,6 +16,11 @@ import CheckReportStatus from './Pages/CheckReportStatus';
 
 function App() {
 
+  const authToken = localStorage.getItem("token");
+  const adminToken = localStorage.getItem("adminToken");
+  console.log("Auth Token : ", authToken);
+  console.log("Admin Token : ", adminToken);
+
   return (
    <BrowserRouter>
     <div className="pages">

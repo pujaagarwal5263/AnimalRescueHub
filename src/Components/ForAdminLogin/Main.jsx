@@ -1,22 +1,27 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Box, Button, TextField, Typography, IconButton, InputAdornment } from '@mui/material';
+import { Visibility, VisibilityOff } from '@material-ui/icons';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Cat from '../../assets/rt.png';
+import '../ForAdminDashboard/Main.css'
 
 const Main = () => {
-  // State to store email and password
+  const navigate = useNavigate()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
-  // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Create a request body object
     const requestBody = {
       email: email,
       password: password,
     };
 
     try {
-      // Make an API request using fetch or Axios
       const response = await fetch('http://localhost:8000/admin-login', {
         method: 'POST',
         headers: {
@@ -25,43 +30,91 @@ const Main = () => {
         body: JSON.stringify(requestBody),
       });
 
-      const data = await response.json(); 
-      console.log(data.message);
+      const data = await response.json();
 
       if (response.ok) {
-        localStorage.setItem('token', data.token);
+        toast.success('Login successful');
+        localStorage.setItem('adminToken', data.token);
+        navigate("/admindashboard")
+      } else {
+        toast.error(data.message);
       }
     } catch (error) {
-      // Handle network or other errors
       console.error('An error occurred:', error);
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
-    <div className='blacktext'>
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Login</button>
+    <Box display="flex" sx={{ overflow: "hidden" , width:"100%", height:"100vh", backgroundColor:"#000"}}>
+      <Box >
+        <img src={Cat } style={{width:"100%", height:'100vh'}}/>
+      </Box>
+          <Box
+          padding="100px"
+          paddingTop="200px"
+      w="100%"
+  
+      backgroundColor="black"
+      color="white"
+    >
+      <Typography variant="h5" gutterBottom color="white" fontWeight="bold" > 
+        Log in
+      </Typography>
+      <Typography variant="h6" gutterBottom color="white" fontWeight="lighter" >
+       Get access to your account
+      </Typography>
+      <form onSubmit={handleSubmit} >
+        <TextField
+          type="email"
+          value={email}
+          placeholder='Enter your email'
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          margin="normal"
+          fullWidth
+          style={{
+            backgroundColor:"white",
+            borderRadius:"5px"
+          }}
+        />
+        <TextField
+          type={showPassword ? 'text' : 'password'}
+          placeholder="Enter your password"
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
+          required
+          margin="normal"
+          fullWidth
+          style={{
+            backgroundColor:"white",
+            borderRadius:"5px"
+          }}
+          InputProps={{
+           
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  onClick={togglePasswordVisibility}
+                  edge="end"
+                  aria-label="toggle password visibility"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
+        <Button type="submit" variant="contained"    margin="normal"  style={{width:"100%", marginTop:"16px" , backgroundColor:"red"}}>
+          Log in
+        </Button>
       </form>
-    </div>
+      <ToastContainer />
+    </Box>
+    </Box>
   );
 };
 
